@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "survey_editions")
@@ -36,4 +37,7 @@ public class SurveyEdition {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "survey_id", nullable = false)
     private Survey survey;
+
+    @OneToMany(mappedBy = "surveyEdition", cascade = CascadeType.ALL)
+    List<Subject> subjects;
 } 

@@ -2,8 +2,6 @@ package com.SurveyManager.BACKEND.entity;
 
 import com.SurveyManager.BACKEND.util.constants.SurveyStatus;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 import java.util.List;
 
 @Entity
@@ -19,7 +17,7 @@ public class Survey extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private SurveyStatus status;
-    
+
     private String category;
     
     @Column(name = "target_audience")

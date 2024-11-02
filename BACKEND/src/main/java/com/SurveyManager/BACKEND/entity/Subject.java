@@ -1,8 +1,6 @@
 package com.SurveyManager.BACKEND.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 import java.util.List;
 
 @Entity
@@ -27,4 +25,11 @@ public class Subject extends BaseEntity {
     
     @Column(nullable = false)
     private String path;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "survey_edition_id", nullable = false)
+    private SurveyEdition surveyEdition;
+
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+    List<Question> questions;
 } 

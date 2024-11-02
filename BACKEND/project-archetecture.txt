@@ -20,6 +20,8 @@ src/main/java/com/SurveyManager/BACKEND/
 
 
 
+
+
 ---------------------------------------------------------------------
 1.API Versioning
     Helps with future API changes
@@ -50,6 +52,7 @@ src/main/java/com/SurveyManager/BACKEND/
 - parentSubject: Subject   // Existing: For hierarchical structure
 - level: Integer           // Added: tracks hierarchy depth
 - path: String            // Added: stores full path like "Math/Algebra/Linear"
+
 
 2.SurveyEdition
 - id: Integer
@@ -99,4 +102,13 @@ src/main/java/com/SurveyManager/BACKEND/
 
 
 
+
+-----------------------------------------------------------------------
+Order of developing Components:
+    1.Owner (Independent entity)
+    2.Survey (Depends on Owner)
+    3.SurveyEdition (Depends on Survey)
+    4.Subject (Reference to its self | Depends on SurveyEdition)
+    5.Question (Depends on Subject)
+    6.Answer (Depends on Question
 

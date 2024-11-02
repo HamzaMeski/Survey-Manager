@@ -33,6 +33,10 @@ public class Question {
     
     @Column(columnDefinition = "TEXT")
     private String instructions;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id", nullable = false)
+    private Subject subject;
     
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Answer> answers;
