@@ -3,9 +3,13 @@ package com.SurveyManager.BACKEND.entity;
 import com.SurveyManager.BACKEND.util.constants.OwnerRole;
 import jakarta.persistence.*;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "owners")
+@Getter
+@Setter
 public class Owner extends BaseEntity {
     
     @Column(nullable = false)

@@ -2,9 +2,13 @@ package com.SurveyManager.BACKEND.entity;
 
 import jakarta.persistence.*;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "subjects")
+@Getter
+@Setter
 public class Subject extends BaseEntity {
     
     @Column(nullable = false)
