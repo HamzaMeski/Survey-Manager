@@ -3,9 +3,13 @@ package com.SurveyManager.BACKEND.entity;
 import com.SurveyManager.BACKEND.util.constants.SurveyStatus;
 import jakarta.persistence.*;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "surveys")
+@Getter
+@Setter
 public class Survey extends BaseEntity {
     
     @Column(nullable = false)
