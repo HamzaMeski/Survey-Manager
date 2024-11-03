@@ -12,7 +12,7 @@ public interface SurveyMapper {
     @Mapping(target = "owner", source = "owner")
     @Mapping(target = "editions", source = "editions")
     SurveyResponseDTO toResponseDTO(Survey survey);
-    
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)

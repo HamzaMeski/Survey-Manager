@@ -110,5 +110,5 @@ Order of developing Components:
     3.SurveyEdition (Depends on Survey)
     4.Subject (Reference to its self | Depends on SurveyEdition)
     5.Question (Depends on Subject)
-    6.Answer (Depends on Question
+    6.Answer (Depends on Question)
 
