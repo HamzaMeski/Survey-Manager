@@ -8,4 +8,5 @@ public class AnswerResponseDTO {
     private String text;
     private Integer selectionCount;
     private Integer orderIndex;
+    private Long questionId;
 } 
