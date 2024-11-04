@@ -15,7 +15,4 @@ public class SubjectRequestDTO {
     
     @NotNull(message = "Level is required")
     private Integer level;
-    
-    @NotBlank(message = "Path is required")
-    private String path;
 } 
