@@ -7,7 +7,7 @@ import java.util.List;
 
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
-    List<Subject> findBySurveyEditionId(Long surveyEditionId);
+    List<Subject> findBySurveyEditionIdAndParentSubjectIsNull(Long surveyEditionId);
     List<Subject> findByParentSubjectId(Long parentId);
     boolean existsByTitleAndSurveyEditionId(String title, Long surveyEditionId);
 } 

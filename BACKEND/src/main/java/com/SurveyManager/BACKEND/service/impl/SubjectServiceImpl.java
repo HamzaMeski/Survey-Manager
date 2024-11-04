@@ -46,8 +46,13 @@ public class SubjectServiceImpl implements SubjectService {
                 .orElseThrow(() -> new ResourceNotFoundException("Parent subject not found"));
             subject.setParentSubject(parentSubject);
             subject.setPath(parentSubject.getPath() + "/" + subject.getTitle());
+
+            // detecting the level of that sub-subject
+            String[] arr = parentSubject.getPath().split("/");
+            subject.setLevel(arr.length);
         } else {
             subject.setPath(subject.getTitle());
+            subject.setLevel(0);
         }
 
         subject = subjectRepository.save(subject);
@@ -65,9 +70,10 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     @Transactional(readOnly = true)
     public List<SubjectResponseDTO> getBySurveyEditionId(Long surveyEditionId) {
-        return subjectRepository.findBySurveyEditionId(surveyEditionId).stream()
-            .map(subjectMapper::toResponseDTO)
-            .collect(Collectors.toList());
+        return subjectRepository.findBySurveyEditionIdAndParentSubjectIsNull(surveyEditionId)
+                .stream()
+                .map(subjectMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

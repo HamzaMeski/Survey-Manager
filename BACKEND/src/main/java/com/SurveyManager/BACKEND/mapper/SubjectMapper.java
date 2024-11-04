@@ -14,6 +14,7 @@ public interface SubjectMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "path", ignore = true)
+    @Mapping(target = "level", ignore = true)
     @Mapping(target = "parentSubject", ignore = true)
     @Mapping(target = "subSubjects", ignore = true)
     @Mapping(target = "surveyEdition", ignore = true)
@@ -21,12 +22,14 @@ public interface SubjectMapper {
     Subject toEntity(SubjectRequestDTO requestDTO);
 
     @Mapping(target = "parentSubjectId", source = "parentSubject.id")
+    @Mapping(target = "subSubjects", source = "subSubjects")
     SubjectResponseDTO toResponseDTO(Subject subject);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "path", ignore = true)
+    @Mapping(target = "level", ignore = true)
     @Mapping(target = "parentSubject", ignore = true)
     @Mapping(target = "subSubjects", ignore = true)
     @Mapping(target = "surveyEdition", ignore = true)
