@@ -12,10 +12,4 @@ public class SubjectRequestDTO {
     private String description;
     
     private Long parentSubjectId;
-    
-    @NotNull(message = "Level is required")
-    private Integer level;
-    
-    @NotBlank(message = "Path is required")
-    private String path;
 } 
