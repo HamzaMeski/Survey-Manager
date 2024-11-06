@@ -27,6 +27,6 @@ public class Owner extends BaseEntity {
     
     private Boolean active = true;
     
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Survey> surveys;
 } 

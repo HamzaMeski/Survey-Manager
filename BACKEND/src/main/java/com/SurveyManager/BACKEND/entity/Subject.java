@@ -21,7 +21,7 @@ public class Subject extends BaseEntity {
     @JoinColumn(name = "parent_id")
     private Subject parentSubject;
     
-    @OneToMany(mappedBy = "parentSubject")
+    @OneToMany(mappedBy = "parentSubject", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Subject> subSubjects;
     
     @Column(nullable = false)
@@ -34,6 +34,6 @@ public class Subject extends BaseEntity {
     @JoinColumn(name = "survey_edition_id", nullable = false)
     private SurveyEdition surveyEdition;
 
-    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Question> questions;
 } 

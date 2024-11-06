@@ -16,7 +16,7 @@ public interface QuestionMapper {
     @Mapping(target = "answers", ignore = true)
     Question toEntity(QuestionRequestDTO requestDTO);
 
-    @Mapping(target = "answers", ignore = true)
+    //@Mapping(target = "answers", ignore = true)
     QuestionResponseDTO toResponseDTO(Question question);
 
     @Mapping(target = "id", ignore = true)
