@@ -30,7 +30,7 @@ public class Question {
     
     @Column(name = "order_index")
     private Integer orderIndex;
-    
+        
     @Column(columnDefinition = "TEXT")
     private String instructions;
 

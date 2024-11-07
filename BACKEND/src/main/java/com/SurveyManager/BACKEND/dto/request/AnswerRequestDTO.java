@@ -9,4 +9,6 @@ public class AnswerRequestDTO {
     private String text;
     
     private Integer orderIndex;
+
+    private Boolean incrementCount;
 } 
