@@ -79,15 +79,21 @@ public class AnswerServiceImpl implements AnswerService {
     @Transactional
     public AnswerResponseDTO update(Long id, AnswerRequestDTO requestDTO) {
         Answer answer = answerRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Answer not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Answer not found with id: " + id));
 
-        // If order index is changing, validate new position
-        if (requestDTO.getOrderIndex() != null && 
-            !requestDTO.getOrderIndex().equals(answer.getOrderIndex()) &&
-            answerRepository.existsByQuestionIdAndOrderIndex(
-                answer.getQuestion().getId(), requestDTO.getOrderIndex())) {
-            throw new ValidationException("Answer with order index " + requestDTO.getOrderIndex() 
-                + " already exists in this question");
+        // Handle selection count increment for survey participation
+        if (Boolean.TRUE.equals(requestDTO.getIncrementCount())) {
+            answer.setSelectionCount(answer.getSelectionCount() + 1);
+            return answerMapper.toResponseDTO(answerRepository.save(answer));
+        }
+
+        // Regular update logic continues...
+        if (requestDTO.getOrderIndex() != null &&
+                !requestDTO.getOrderIndex().equals(answer.getOrderIndex()) &&
+                answerRepository.existsByQuestionIdAndOrderIndex(
+                        answer.getQuestion().getId(), requestDTO.getOrderIndex())) {
+            throw new ValidationException("Answer with order index " + requestDTO.getOrderIndex()
+                    + " already exists in this question");
         }
 
         answerMapper.updateEntity(answer, requestDTO);
