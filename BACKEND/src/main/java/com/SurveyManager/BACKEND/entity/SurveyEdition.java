@@ -4,6 +4,7 @@ import com.SurveyManager.BACKEND.util.constants.EditionStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -31,6 +32,10 @@ public class SurveyEdition {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EditionStatus status;
+    @PrePersist
+    protected void onCreate() {
+        status = EditionStatus.DRAFT;
+    }
     
     private String version;
     

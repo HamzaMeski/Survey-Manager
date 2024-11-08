@@ -16,12 +16,14 @@ public interface SurveyEditionMapper {
     
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "creationDate", expression = "java(LocalDateTime.now())")
-    @Mapping(target = "survey.id", source = "surveyId")
+    @Mapping(target = "status", ignore = true)
+    @Mapping(target = "survey", ignore = true)
     @Mapping(target = "subjects", ignore = true)
     SurveyEdition toEntity(SurveyEditionRequestDTO requestDTO);
     
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "creationDate", ignore = true)
+    @Mapping(target = "status", ignore = true)
     @Mapping(target = "survey", ignore = true)
     @Mapping(target = "subjects", ignore = true)
     void updateEntity(@MappingTarget SurveyEdition surveyEdition, SurveyEditionRequestDTO requestDTO);
