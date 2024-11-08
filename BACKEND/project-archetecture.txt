@@ -1,114 +1,90 @@
-src/main/java/com/SurveyManager/BACKEND/
-├── config/           # Configuration classes
-│   └── security/    # (If we plan to add authentication/authorization)
-├── controller/       # REST controllers
-│   ├── v1/         # API versioning
-│   └── advice/     # Global exception handlers
-├── dto/             
-│   ├── request/     # Request DTOs
-│   └── response/    # Response DTOs
-├── entity/          # JPA entities
-├── repository/      # Spring Data JPA repositories
-├── service/         
-│   ├── impl/       # Service implementations
-│   └── facade/     # Service facades for complex operations
-├── mapper/          # MapStruct mappers (moved out of service)
-├── exception/       # Custom exceptions
-└── util/           
-    ├── constants/  # Constants and enums (like QuestionType)
-    └── validator/  # Custom validators
+
+    src/main/java/com/SurveyManager/BACKEND/
+    ├── config/           # Configuration classes
+    │   └── security/    # (If we plan to add authentication/authorization)
+    ├── controller/       # REST controllers
+    ├── dto/
+    │   ├── request/     # Request DTOs
+    │   └── response/    # Response DTOs
+    ├── entity/          # JPA entities
+    ├── repository/      # Spring Data JPA repositories
+    ├── service/
+    │   └── impl/       # Service implementations
+    ├── mapper/          # MapStruct mappers (moved out of service)
+    ├── exception/       # Custom exceptions
+    └── util/
+        └── constants/  # Constants and enums (like QuestionType)
+
+
+    ---------------------------------------------------------------------
+    1.Subject:
+    - id: Integer
+    - title: String
+    - description: String          // Added: Detailed description of the subject
+    - code: String                // Added: Unique code for the subject
+    - active: Boolean            // Added: To soft delete/deactivate subjects
+    - createdAt: LocalDateTime  // Added: Audit field
+    - updatedAt: LocalDateTime // Added: Audit field
+    - parentSubject: Subject   // Existing: For hierarchical structure
+    - level: Integer           // Added: tracks hierarchy depth
+    - path: String            // Added: stores full path like "Math/Algebra/Linear"
+
+
+    2.SurveyEdition
+    - id: Integer
+    - creationDate: Date
+    - startDate: Date
+    - endDate: Date           // Added: When this edition expires
+    - year: Integer
+    - status: EditionStatus  // Added: DRAFT, PUBLISHED, CLOSED
+    - version: String       // Added: Version number/code
+
+
+    3.Survey
+    - id: Integer
+    - title: String
+    - description: String
+    - status: SurveyStatus        // Added: ACTIVE, INACTIVE, ARCHIVED
+    - createdAt: LocalDateTime   // Added: Audit field
+    - updatedAt: LocalDateTime  // Added: Audit field
+    - category: String         // Added: For categorization
+    - targetAudience: String  // Added: Who this survey is for
+
+
+    4.Question
+    - id: Integer
+    - text: String
+    - answerCount: Integer
+    - type: QuestionType
+    - required: Boolean           // Added: Is answer mandatory?
+    - orderIndex: Integer        // Added: Question order in subject
+    - instructions: String    // Added: Help text for question
+
+
+    5.Answer
+    - id: Integer
+    - text: String
+    - selectionCount: Integer
+    - orderIndex: Integer       // Added: Display order
+
+
+    6.Owner
+    - id: Integer
+    - name: String
+    - email: String              // Added: Contact information
+    - password: String          // Added: For authentication
+    - role: OwnerRole          // Added: ADMIN, EDITOR, VIEWER
+    - active: Boolean          // Added: Account status
 
 
 
 
-
----------------------------------------------------------------------
-1.API Versioning
-    Helps with future API changes
-    Better API lifecycle management
-2.Separate Mapper Package
-    Mappers should be independent of service layer
-    Makes it easier to maintain DTOs mappings
-3.Service Facade
-    The UML shows complex relationships (Survey -> SurveyEdition -> Subject)
-    Facade pattern helps manage complex operations across multiple services
-4.Constants and Validators
-    QuestionType enum needs its own space
-    Custom validation for business rules
-
-
-
-
-
----------------------------------------------------------------------
-1.Subject:
-- id: Integer
-- title: String
-- description: String          // Added: Detailed description of the subject
-- code: String                // Added: Unique code for the subject
-- active: Boolean            // Added: To soft delete/deactivate subjects
-- createdAt: LocalDateTime  // Added: Audit field
-- updatedAt: LocalDateTime // Added: Audit field
-- parentSubject: Subject   // Existing: For hierarchical structure
-- level: Integer           // Added: tracks hierarchy depth
-- path: String            // Added: stores full path like "Math/Algebra/Linear"
-
-
-2.SurveyEdition
-- id: Integer
-- creationDate: Date
-- startDate: Date
-- endDate: Date           // Added: When this edition expires
-- year: Integer
-- status: EditionStatus  // Added: DRAFT, PUBLISHED, CLOSED
-- version: String       // Added: Version number/code
-
-
-3.Survey
-- id: Integer
-- title: String
-- description: String
-- status: SurveyStatus        // Added: ACTIVE, INACTIVE, ARCHIVED
-- createdAt: LocalDateTime   // Added: Audit field
-- updatedAt: LocalDateTime  // Added: Audit field
-- category: String         // Added: For categorization
-- targetAudience: String  // Added: Who this survey is for
-
-
-4.Question
-- id: Integer
-- text: String
-- answerCount: Integer
-- type: QuestionType
-- required: Boolean           // Added: Is answer mandatory?
-- orderIndex: Integer        // Added: Question order in subject
-- instructions: String    // Added: Help text for question
-
-
-5.Answer
-- id: Integer
-- text: String
-- selectionCount: Integer
-- orderIndex: Integer       // Added: Display order
-
-
-6.Owner
-- id: Integer
-- name: String
-- email: String              // Added: Contact information
-- password: String          // Added: For authentication
-- role: OwnerRole          // Added: ADMIN, EDITOR, VIEWER
-- active: Boolean          // Added: Account status
-
-
-
-
------------------------------------------------------------------------
-Order of developing Components:
-    1.Owner (Independent entity)
-    2.Survey (Depends on Owner)
-    3.SurveyEdition (Depends on Survey)
-    4.Subject (Reference to its self | Depends on SurveyEdition)
-    5.Question (Depends on Subject)
-    6.Answer (Depends on Question)
+    -----------------------------------------------------------------------
+    Order of developing Components:
+        1.Owner (Independent entity)
+        2.Survey (Depends on Owner)
+        3.SurveyEdition (Depends on Survey)
+        4.Subject (Reference to its self | Depends on SurveyEdition)
+        5.Question (Depends on Subject)
+        6.Answer (Depends on Question)
 
