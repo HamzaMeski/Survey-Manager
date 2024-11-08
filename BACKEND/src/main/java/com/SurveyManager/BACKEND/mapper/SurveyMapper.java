@@ -16,7 +16,7 @@ public interface SurveyMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "owner.id", source = "ownerId")
+    @Mapping(target = "owner", ignore = true)
     @Mapping(target = "editions", ignore = true)
     Survey toEntity(SurveyRequestDTO requestDTO);
     

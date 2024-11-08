@@ -29,7 +29,7 @@ public class SurveyServiceImpl implements SurveyService {
     public SurveyResponseDTO create(SurveyRequestDTO requestDTO) {
         Owner owner = ownerRepository.findById(requestDTO.getOwnerId())
             .orElseThrow(() -> new ResourceNotFoundException("Owner not found with id: " + requestDTO.getOwnerId()));
-            
+
         Survey survey = surveyMapper.toEntity(requestDTO);
         survey.setOwner(owner);
         survey = surveyRepository.save(survey);
