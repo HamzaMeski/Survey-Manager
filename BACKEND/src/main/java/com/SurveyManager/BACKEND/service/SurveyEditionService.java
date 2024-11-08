@@ -10,5 +10,6 @@ public interface SurveyEditionService {
     List<SurveyEditionResponseDTO> getBySurveyId(Long surveyId);
     List<SurveyEditionResponseDTO> getBySurveyIdAndYear(Long surveyId, Integer year);
     SurveyEditionResponseDTO update(Long id, SurveyEditionRequestDTO requestDTO);
+    void closeSurveyEdition(Long id);
     void delete(Long id);
 } 

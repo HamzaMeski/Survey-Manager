@@ -15,9 +15,6 @@ public class SurveyEditionRequestDTO {
     @NotNull(message = "Year is required")
     private Integer year;
     
-    @NotNull(message = "Status is required")
-    private EditionStatus status;
-    
     private String version;
     
     @NotNull(message = "Survey ID is required")

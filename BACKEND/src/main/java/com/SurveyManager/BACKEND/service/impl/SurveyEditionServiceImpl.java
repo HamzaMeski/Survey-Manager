@@ -5,16 +5,19 @@ import com.SurveyManager.BACKEND.dto.response.SurveyEditionResponseDTO;
 import com.SurveyManager.BACKEND.entity.Survey;
 import com.SurveyManager.BACKEND.entity.SurveyEdition;
 import com.SurveyManager.BACKEND.exception.ResourceNotFoundException;
+import com.SurveyManager.BACKEND.exception.ValidationException;
 import com.SurveyManager.BACKEND.mapper.SurveyEditionMapper;
 import com.SurveyManager.BACKEND.repository.SurveyEditionRepository;
 import com.SurveyManager.BACKEND.repository.SurveyRepository;
 import com.SurveyManager.BACKEND.service.SurveyEditionService;
+import com.SurveyManager.BACKEND.util.constants.EditionStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +32,27 @@ public class SurveyEditionServiceImpl implements SurveyEditionService {
     public SurveyEditionResponseDTO create(SurveyEditionRequestDTO requestDTO) {
         Survey survey = surveyRepository.findById(requestDTO.getSurveyId())
             .orElseThrow(() -> new ResourceNotFoundException("Survey not found with id: " + requestDTO.getSurveyId()));
+
+        // making sure that the survey edition start_time don't overlap with the past time
+        if(requestDTO.getStartDate().isBefore(LocalDateTime.now())) {
+            throw new ValidationException("start time of survey edition shouldn't be in the past");
+        }
+
+        if(requestDTO.getEndDate() != null) {
+            if(requestDTO.getEndDate().isBefore(requestDTO.getStartDate())) {
+                throw new ValidationException("end time must be after start time");
+            }
+        }
+
+        // making sure that the survey edition duration don't overlap with a duration of other survey editions of the same survey
+        if(surveyEditionRepository.existsOverlappingEdition(requestDTO.getSurveyId(), requestDTO.getStartDate(), requestDTO.getEndDate())) {
+            throw new ValidationException("duration between start time and end time overlap with duration of other survey editions of the same survey");
+        }
+
+        // making sure that the year of the edition is the same in start and end dates
+        if(!(requestDTO.getStartDate().getYear() == requestDTO.getYear() && requestDTO.getEndDate().getYear() == requestDTO.getYear())) {
+            throw new ValidationException("the year of start and end dates should be same as year!");
+        }
 
         SurveyEdition surveyEdition = surveyEditionMapper.toEntity(requestDTO);
         surveyEdition.setSurvey(survey);
@@ -82,6 +106,16 @@ public class SurveyEditionServiceImpl implements SurveyEditionService {
         surveyEditionMapper.updateEntity(surveyEdition, requestDTO);
         surveyEdition = surveyEditionRepository.save(surveyEdition);
         return surveyEditionMapper.toResponseDTO(surveyEdition);
+    }
+
+    @Override
+    @Transactional
+    public void closeSurveyEdition(Long id) {
+        SurveyEdition surveyEdition = surveyEditionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("survey edition not found with id:" + id));
+
+        surveyEdition.setStatus(EditionStatus.CLOSED);
+        surveyEditionRepository.save(surveyEdition);
     }
 
     @Override
