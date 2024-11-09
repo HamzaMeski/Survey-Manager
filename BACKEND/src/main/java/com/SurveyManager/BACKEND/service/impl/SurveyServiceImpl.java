@@ -2,27 +2,40 @@ package com.SurveyManager.BACKEND.service.impl;
 
 import com.SurveyManager.BACKEND.dto.request.SurveyRequestDTO;
 import com.SurveyManager.BACKEND.dto.response.SurveyResponseDTO;
+import com.SurveyManager.BACKEND.dto.response.full.SurveyFullResponseDTO;
 import com.SurveyManager.BACKEND.entity.Owner;
 import com.SurveyManager.BACKEND.entity.Survey;
+import com.SurveyManager.BACKEND.entity.SurveyEdition;
+import com.SurveyManager.BACKEND.entity.Subject;
+import com.SurveyManager.BACKEND.entity.Question;
 import com.SurveyManager.BACKEND.exception.ResourceNotFoundException;
 import com.SurveyManager.BACKEND.mapper.SurveyMapper;
+import com.SurveyManager.BACKEND.mapper.SurveyFullMapper;
 import com.SurveyManager.BACKEND.repository.OwnerRepository;
 import com.SurveyManager.BACKEND.repository.SurveyRepository;
+import com.SurveyManager.BACKEND.repository.SurveyEditionRepository;
+import com.SurveyManager.BACKEND.repository.SubjectRepository;
+import com.SurveyManager.BACKEND.repository.QuestionRepository;
 import com.SurveyManager.BACKEND.service.SurveyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class SurveyServiceImpl implements SurveyService {
-    
+
     private final SurveyRepository surveyRepository;
     private final OwnerRepository ownerRepository;
     private final SurveyMapper surveyMapper;
+    private final SurveyFullMapper surveyFullMapper;
+    private final SubjectRepository subjectRepository;
+    private final QuestionRepository questionRepository;
     
     @Override
     @Transactional
@@ -35,6 +48,52 @@ public class SurveyServiceImpl implements SurveyService {
         survey = surveyRepository.save(survey);
         
         return surveyMapper.toResponseDTO(survey);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SurveyFullResponseDTO getFullSurvey(Long id) {
+        // 1. Get survey with editions
+        Survey survey = surveyRepository.findByIdWithEditions(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Survey not found with id: " + id));
+
+        // 2. Get all edition IDs
+        List<Long> editionIds = survey.getEditions().stream()
+                .map(SurveyEdition::getId)
+                .collect(Collectors.toList());
+
+        // 3. Get subjects for these editions
+        List<Subject> subjects = subjectRepository.findByEditionIdsWithQuestions(editionIds);
+
+        // 4. Get questions with answers
+        List<Long> questionIds = subjects.stream()
+                .flatMap(s -> s.getQuestions().stream())
+                .map(Question::getId)
+                .collect(Collectors.toList());
+
+        List<Question> questions = questionRepository.findByIdsWithAnswers(questionIds);
+
+        // 5. Create a map for quick lookup
+        Map<Long, Question> questionMap = questions.stream()
+                .collect(Collectors.toMap(Question::getId, q -> q));
+
+        // 6. Update questions with their answers
+        subjects.forEach(subject ->
+                subject.getQuestions().forEach(q ->
+                        q.setAnswers(questionMap.get(q.getId()).getAnswers())
+                )
+        );
+
+        // 7. Group subjects by edition
+        Map<Long, List<Subject>> editionSubjectsMap = subjects.stream()
+                .collect(Collectors.groupingBy(s -> s.getSurveyEdition().getId()));
+
+        // 8. Set subjects to editions
+        survey.getEditions().forEach(edition ->
+                edition.setSubjects(editionSubjectsMap.getOrDefault(edition.getId(), new ArrayList<>()))
+        );
+
+        return surveyFullMapper.toFullResponseDTO(survey);
     }
     
     @Override

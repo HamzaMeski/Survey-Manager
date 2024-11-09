@@ -2,6 +2,7 @@ package com.SurveyManager.BACKEND.controller;
 
 import com.SurveyManager.BACKEND.dto.request.SurveyRequestDTO;
 import com.SurveyManager.BACKEND.dto.response.SurveyResponseDTO;
+import com.SurveyManager.BACKEND.dto.response.full.SurveyFullResponseDTO;
 import com.SurveyManager.BACKEND.service.SurveyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,11 @@ public class SurveyController {
     @GetMapping("/{id}")
     public ResponseEntity<SurveyResponseDTO> getById(@PathVariable Long id) {
         return ResponseEntity.ok(surveyService.getById(id));
+    }
+
+    @GetMapping("/{id}/full")
+    public ResponseEntity<SurveyFullResponseDTO> getFullSurvey(@PathVariable Long id) {
+        return ResponseEntity.ok(surveyService.getFullSurvey(id));
     }
     
     @GetMapping
