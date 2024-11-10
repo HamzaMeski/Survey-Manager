@@ -10,4 +10,6 @@ public interface AnswerService {
     List<AnswerResponseDTO> getByQuestionId(Long questionId);
     AnswerResponseDTO update(Long id, AnswerRequestDTO requestDTO);
     void delete(Long id);
+    void participateMultiChoiceAnswer(List<Long> answersIDs);
+    void participateSingleChoiceAnswer(Long answerId);
 } 
