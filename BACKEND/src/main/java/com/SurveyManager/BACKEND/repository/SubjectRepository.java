@@ -20,6 +20,6 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
     long countByParentPathAndLevel(@Param("parentPath") String parentPath, @Param("level") Integer level);
 
     @Query("SELECT DISTINCT s FROM Subject s LEFT JOIN FETCH s.questions " +
-            "WHERE s.surveyEdition.id IN :editionIds")
+            "WHERE s.surveyEdition.id IN :editionIds AND s.parentSubject IS NULL")
     List<Subject> findByEditionIdsWithQuestions(@Param("editionIds") List<Long> editionIds);
 }
