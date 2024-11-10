@@ -9,7 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/answers")
@@ -46,5 +49,25 @@ public class AnswerController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         answerService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/participate/{ids}/multiChoice")
+    public ResponseEntity<Map<String, String>> participateMultiChoiceAnswer(
+            @PathVariable String ids
+    ) {
+        List<Long> answersIDs = Arrays.stream(ids.split(","))
+                .map(Long::parseLong)
+                .collect(Collectors.toList());
+
+        answerService.participateMultiChoiceAnswer(answersIDs);
+        return ResponseEntity.ok(Map.of("message", "Multi-choice answers selections done successfully."));
+    }
+
+    @PutMapping("/participate/{id}/singleChoice")
+    public ResponseEntity<Map<String, String>> participateSingleChoiceAnswer(
+            @PathVariable Long id
+    ) {
+        answerService.participateSingleChoiceAnswer(id);
+        return ResponseEntity.ok(Map.of("message", "Single choice answer selections done successfully."));
     }
 } 

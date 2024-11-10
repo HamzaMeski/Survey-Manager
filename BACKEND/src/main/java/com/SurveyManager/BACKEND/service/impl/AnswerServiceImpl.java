@@ -4,6 +4,7 @@ import com.SurveyManager.BACKEND.dto.request.AnswerRequestDTO;
 import com.SurveyManager.BACKEND.dto.response.AnswerResponseDTO;
 import com.SurveyManager.BACKEND.entity.Answer;
 import com.SurveyManager.BACKEND.entity.Question;
+import com.SurveyManager.BACKEND.exception.DuplicateResourceException;
 import com.SurveyManager.BACKEND.exception.ResourceNotFoundException;
 import com.SurveyManager.BACKEND.exception.ValidationException;
 import com.SurveyManager.BACKEND.mapper.AnswerMapper;
@@ -31,8 +32,6 @@ public class AnswerServiceImpl implements AnswerService {
     public AnswerResponseDTO create(Long questionId, AnswerRequestDTO requestDTO) {
         Question question = questionRepository.findById(questionId)
             .orElseThrow(() -> new ResourceNotFoundException("Question not found with id: " + questionId));
-
-        validateAnswerCreation(question);
 
         Answer answer = answerMapper.toEntity(requestDTO);
         answer.setQuestion(question);
@@ -81,20 +80,14 @@ public class AnswerServiceImpl implements AnswerService {
         Answer answer = answerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Answer not found with id: " + id));
 
-        // Handle selection count increment for survey participation
-        if (Boolean.TRUE.equals(requestDTO.getIncrementCount())) {
-            answer.setSelectionCount(answer.getSelectionCount() + 1);
-            return answerMapper.toResponseDTO(answerRepository.save(answer));
-        }
+//        if (requestDTO.getOrderIndex() != null &&
+//                !requestDTO.getOrderIndex().equals(answer.getOrderIndex()) &&
+//                answerRepository.existsByQuestionIdAndOrderIndex(
+//                        answer.getQuestion().getId(), requestDTO.getOrderIndex())) {
+//            throw new ValidationException("Answer with order index " + requestDTO.getOrderIndex()
+//                    + " already exists in this question");
+//        }
 
-        // Regular update logic continues...
-        if (requestDTO.getOrderIndex() != null &&
-                !requestDTO.getOrderIndex().equals(answer.getOrderIndex()) &&
-                answerRepository.existsByQuestionIdAndOrderIndex(
-                        answer.getQuestion().getId(), requestDTO.getOrderIndex())) {
-            throw new ValidationException("Answer with order index " + requestDTO.getOrderIndex()
-                    + " already exists in this question");
-        }
 
         answerMapper.updateEntity(answer, requestDTO);
         answer = answerRepository.save(answer);
@@ -117,19 +110,21 @@ public class AnswerServiceImpl implements AnswerService {
         questionRepository.save(question);
     }
 
-    private void validateAnswerCreation(Question question) {
-        int currentAnswerCount = question.getAnswerCount();
+    @Override
+    @Transactional
+    public void participateMultiChoiceAnswer(List<Long> answersIDs) {
+       for(Long answerId : answersIDs) {
+           participateSingleChoiceAnswer(answerId);
+       }
+    }
 
-        if (question.getType() == QuestionType.SINGLE_CHOICE && currentAnswerCount >= 4) {
-            throw new ValidationException(
-                "Single choice questions cannot have more than 4 answers"
-            );
-        }
+    @Override
+    @Transactional
+    public void participateSingleChoiceAnswer(Long answerId) {
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new ResourceNotFoundException("Answer not found with ID "+ answerId));
 
-        if (question.getType() == QuestionType.MULTIPLE_CHOICE && currentAnswerCount >= 6) {
-            throw new ValidationException(
-                "Multiple choice questions cannot have more than 6 answers"
-            );
-        }
+        answer.setSelectionCount(answer.getSelectionCount() + 1);
+        answerRepository.save(answer);
     }
 } 
