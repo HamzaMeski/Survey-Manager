@@ -1,30 +1,32 @@
 package com.SurveyManager.BACKEND.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.SurveyManager.BACKEND.dto.request.SurveyRequestDTO;
 import com.SurveyManager.BACKEND.dto.response.SurveyResponseDTO;
 import com.SurveyManager.BACKEND.dto.response.full.SurveyFullResponseDTO;
 import com.SurveyManager.BACKEND.entity.Owner;
+import com.SurveyManager.BACKEND.entity.Question;
+import com.SurveyManager.BACKEND.entity.Subject;
 import com.SurveyManager.BACKEND.entity.Survey;
 import com.SurveyManager.BACKEND.entity.SurveyEdition;
-import com.SurveyManager.BACKEND.entity.Subject;
-import com.SurveyManager.BACKEND.entity.Question;
 import com.SurveyManager.BACKEND.exception.ResourceNotFoundException;
-import com.SurveyManager.BACKEND.mapper.SurveyMapper;
+import com.SurveyManager.BACKEND.exception.ValidationException;
 import com.SurveyManager.BACKEND.mapper.SurveyFullMapper;
+import com.SurveyManager.BACKEND.mapper.SurveyMapper;
 import com.SurveyManager.BACKEND.repository.OwnerRepository;
-import com.SurveyManager.BACKEND.repository.SurveyRepository;
-import com.SurveyManager.BACKEND.repository.SurveyEditionRepository;
-import com.SurveyManager.BACKEND.repository.SubjectRepository;
 import com.SurveyManager.BACKEND.repository.QuestionRepository;
+import com.SurveyManager.BACKEND.repository.SubjectRepository;
+import com.SurveyManager.BACKEND.repository.SurveyRepository;
 import com.SurveyManager.BACKEND.service.SurveyService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +44,12 @@ public class SurveyServiceImpl implements SurveyService {
     public SurveyResponseDTO create(SurveyRequestDTO requestDTO) {
         Owner owner = ownerRepository.findById(requestDTO.getOwnerId())
             .orElseThrow(() -> new ResourceNotFoundException("Owner not found with id: " + requestDTO.getOwnerId()));
+        
 
+        if(surveyRepository.existsByTitle(requestDTO.getTitle())) {
+            throw new ValidationException("Survey already exists");
+        }
+        
         Survey survey = surveyMapper.toEntity(requestDTO);
         survey.setOwner(owner);
         survey = surveyRepository.save(survey);
