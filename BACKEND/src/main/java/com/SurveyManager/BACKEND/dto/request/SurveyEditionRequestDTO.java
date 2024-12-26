@@ -10,6 +10,7 @@ public class SurveyEditionRequestDTO {
     @NotNull(message = "Start date is required")
     private LocalDateTime startDate;
     
+    @NotNull(message = "End date is required")
     private LocalDateTime endDate;
     
     @NotNull(message = "Year is required")

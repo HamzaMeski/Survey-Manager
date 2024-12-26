@@ -1,5 +1,12 @@
 package com.SurveyManager.BACKEND.service.impl;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.SurveyManager.BACKEND.dto.request.SurveyEditionRequestDTO;
 import com.SurveyManager.BACKEND.dto.response.SurveyEditionResponseDTO;
 import com.SurveyManager.BACKEND.entity.Survey;
@@ -11,16 +18,13 @@ import com.SurveyManager.BACKEND.repository.SurveyEditionRepository;
 import com.SurveyManager.BACKEND.repository.SurveyRepository;
 import com.SurveyManager.BACKEND.service.SurveyEditionService;
 import com.SurveyManager.BACKEND.util.constants.EditionStatus;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.time.LocalDateTime;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SurveyEditionServiceImpl implements SurveyEditionService {
 
     private final SurveyEditionRepository surveyEditionRepository;
@@ -32,7 +36,7 @@ public class SurveyEditionServiceImpl implements SurveyEditionService {
     public SurveyEditionResponseDTO create(SurveyEditionRequestDTO requestDTO) {
         Survey survey = surveyRepository.findById(requestDTO.getSurveyId())
             .orElseThrow(() -> new ResourceNotFoundException("Survey not found with id: " + requestDTO.getSurveyId()));
-
+        
         // making sure that the survey edition start_time don't overlap with the past time
         if(requestDTO.getStartDate().isBefore(LocalDateTime.now())) {
             throw new ValidationException("start time of survey edition shouldn't be in the past");
@@ -49,8 +53,11 @@ public class SurveyEditionServiceImpl implements SurveyEditionService {
             throw new ValidationException("duration between start time and end time overlap with duration of other survey editions of the same survey");
         }
 
+
+        log.info("*****start date: {}", requestDTO.getStartDate().getYear());
+        log.info("*****end   date: {}", requestDTO.getEndDate().getYear());
         // making sure that the year of the edition is the same in start and end dates
-        if(!(requestDTO.getStartDate().getYear() == requestDTO.getYear() && requestDTO.getEndDate().getYear() == requestDTO.getYear())) {
+        if(requestDTO.getStartDate().getYear() != requestDTO.getEndDate().getYear()) {
             throw new ValidationException("the year of start and end dates should be same as year!");
         }
 
