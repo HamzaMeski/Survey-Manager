@@ -3,7 +3,7 @@ spring:
     name: BACKEND
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/survey_system
+    url: jdbc:postgresql://localhost:5432/survey_system
     username: hamza
     password: hamza
 
