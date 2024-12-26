@@ -1,9 +1,9 @@
 package com.SurveyManager.BACKEND.dto.request;
 
-import com.SurveyManager.BACKEND.util.constants.EditionStatus;
-import lombok.Data;
-import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 @Data
 public class SurveyEditionRequestDTO {
