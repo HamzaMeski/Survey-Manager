@@ -20,11 +20,9 @@ import com.SurveyManager.BACKEND.service.SurveyEditionService;
 import com.SurveyManager.BACKEND.util.constants.EditionStatus;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class SurveyEditionServiceImpl implements SurveyEditionService {
 
     private final SurveyEditionRepository surveyEditionRepository;
@@ -53,9 +51,6 @@ public class SurveyEditionServiceImpl implements SurveyEditionService {
             throw new ValidationException("duration between start time and end time overlap with duration of other survey editions of the same survey");
         }
 
-
-        log.info("*****start date: {}", requestDTO.getStartDate().getYear());
-        log.info("*****end   date: {}", requestDTO.getEndDate().getYear());
         // making sure that the year of the edition is the same in start and end dates
         if(requestDTO.getStartDate().getYear() != requestDTO.getEndDate().getYear()) {
             throw new ValidationException("the year of start and end dates should be same as year!");
