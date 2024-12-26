@@ -1,5 +1,11 @@
 package com.SurveyManager.BACKEND.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.SurveyManager.BACKEND.dto.request.QuestionRequestDTO;
 import com.SurveyManager.BACKEND.dto.response.QuestionResponseDTO;
 import com.SurveyManager.BACKEND.entity.Question;
@@ -10,12 +16,8 @@ import com.SurveyManager.BACKEND.mapper.QuestionMapper;
 import com.SurveyManager.BACKEND.repository.QuestionRepository;
 import com.SurveyManager.BACKEND.repository.SubjectRepository;
 import com.SurveyManager.BACKEND.service.QuestionService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +32,10 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionResponseDTO create(Long subjectId, QuestionRequestDTO requestDTO) {
         Subject subject = subjectRepository.findById(subjectId)
             .orElseThrow(() -> new ResourceNotFoundException("Subject not found with id: " + subjectId));
+    
+        if(questionRepository.isQuestionAssignedToSubject(requestDTO.getText(), subjectId)) {
+            throw new ValidationException("Question already assigned to that subject");
+        }
 
         validateSubjectForQuestions(subject);
         
