@@ -1,23 +1,23 @@
 package com.SurveyManager.BACKEND.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.SurveyManager.BACKEND.dto.request.AnswerRequestDTO;
 import com.SurveyManager.BACKEND.dto.response.AnswerResponseDTO;
 import com.SurveyManager.BACKEND.entity.Answer;
 import com.SurveyManager.BACKEND.entity.Question;
-import com.SurveyManager.BACKEND.exception.DuplicateResourceException;
 import com.SurveyManager.BACKEND.exception.ResourceNotFoundException;
 import com.SurveyManager.BACKEND.exception.ValidationException;
 import com.SurveyManager.BACKEND.mapper.AnswerMapper;
 import com.SurveyManager.BACKEND.repository.AnswerRepository;
 import com.SurveyManager.BACKEND.repository.QuestionRepository;
 import com.SurveyManager.BACKEND.service.AnswerService;
-import com.SurveyManager.BACKEND.util.constants.QuestionType;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +32,10 @@ public class AnswerServiceImpl implements AnswerService {
     public AnswerResponseDTO create(Long questionId, AnswerRequestDTO requestDTO) {
         Question question = questionRepository.findById(questionId)
             .orElseThrow(() -> new ResourceNotFoundException("Question not found with id: " + questionId));
+        
+        if(answerRepository.isAnswerAssignedToQuestion(requestDTO.getText(), questionId)) {
+            throw new ValidationException("Answer already exists");
+        }
 
         Answer answer = answerMapper.toEntity(requestDTO);
         answer.setQuestion(question);
@@ -79,15 +83,6 @@ public class AnswerServiceImpl implements AnswerService {
     public AnswerResponseDTO update(Long id, AnswerRequestDTO requestDTO) {
         Answer answer = answerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Answer not found with id: " + id));
-
-//        if (requestDTO.getOrderIndex() != null &&
-//                !requestDTO.getOrderIndex().equals(answer.getOrderIndex()) &&
-//                answerRepository.existsByQuestionIdAndOrderIndex(
-//                        answer.getQuestion().getId(), requestDTO.getOrderIndex())) {
-//            throw new ValidationException("Answer with order index " + requestDTO.getOrderIndex()
-//                    + " already exists in this question");
-//        }
-
 
         answerMapper.updateEntity(answer, requestDTO);
         answer = answerRepository.save(answer);

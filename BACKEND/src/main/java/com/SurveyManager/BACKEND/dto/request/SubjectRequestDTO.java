@@ -1,8 +1,7 @@
 package com.SurveyManager.BACKEND.dto.request;
 
-import lombok.Data;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 @Data
 public class SubjectRequestDTO {

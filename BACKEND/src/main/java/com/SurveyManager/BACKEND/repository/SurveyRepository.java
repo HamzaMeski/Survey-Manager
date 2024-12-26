@@ -14,4 +14,6 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
     @Query("SELECT DISTINCT s FROM Survey s LEFT JOIN FETCH s.editions WHERE s.id = :id")
     Optional<Survey> findByIdWithEditions(@Param("id") Long id);
+
+    boolean existsByTitle(String title);
 } 
