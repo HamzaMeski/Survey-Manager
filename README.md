@@ -1,5 +1,3 @@
-# 📊 Survey Manager (Backend APIs: Spring Boot 3.2.3)
-
 A robust Spring Boot application for managing surveys, questions, and answers with comprehensive analytics capabilities.
 
 ## 🌟 Features
