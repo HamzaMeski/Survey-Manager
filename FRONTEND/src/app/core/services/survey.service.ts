@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Survey, SurveyRequest, SurveyResponse } from '../../models/survey.interface';
+import { SurveyRequest, SurveyResponse } from '../../models/survey.interface';
 
 @Injectable({
   providedIn: 'root'
