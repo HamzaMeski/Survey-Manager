@@ -12,6 +12,6 @@ export class AppComponent {
   title = 'FRONTEND';
 
   constructor() {
-    console.log("hi their")
   }
+
 }
