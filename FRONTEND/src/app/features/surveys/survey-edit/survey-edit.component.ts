@@ -32,7 +32,7 @@ export class SurveyEditComponent implements OnInit {
                 status: this.survey.status,
                 category: this.survey.category,
                 targetAudience: this.survey.targetAudience,
-                ownerId: this.survey.ownerId
+                ownerId: this.survey.owner.id
             });
         }
     }

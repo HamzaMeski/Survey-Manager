@@ -20,7 +20,7 @@ export interface SurveyResponse {
     status: SurveyStatus
     category: string, 
     targetAudience: string, 
-    ownerId: number
+    owner: any
     createdAt: Date;
     updatedAt: Date;
 }
