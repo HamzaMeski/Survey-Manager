@@ -4,17 +4,20 @@ import { RouterModule } from '@angular/router';
 import { SurveyService } from '../../../core/services/survey.service';
 import { SurveyResponse } from '../../../models/survey.interface';
 import { SurveyCreateComponent } from '../survey-create/survey-create.component';
+import { SurveyEditComponent } from '../survey-edit/survey-edit.component';
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-survey-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, SurveyCreateComponent, ModalComponent],
+  imports: [CommonModule, RouterModule, SurveyCreateComponent, SurveyEditComponent, ModalComponent],
   templateUrl: './survey-list.component.html'
 })
 export class SurveyListComponent implements OnInit {
   surveys: SurveyResponse[] = [];
   showCreateModal = false;
+  showEditModal = false;
+  selectedSurvey: SurveyResponse | null = null;
 
   constructor(private surveyService: SurveyService) {}
 
@@ -30,6 +33,22 @@ export class SurveyListComponent implements OnInit {
       });
   }
 
+  onEditClick(survey: SurveyResponse): void {
+    this.selectedSurvey = survey;
+    this.showEditModal = true;
+  }
+
+  onSurveyEdited(): void {
+    this.showEditModal = false;
+    this.selectedSurvey = null;
+    this.loadSurveys();
+  }
+
+  onSurveyCreated(): void {
+    this.showCreateModal = false;
+    this.loadSurveys();
+  }
+
   deleteSurvey(id: number): void {
     if (confirm('Are you sure you want to delete this survey?')) {
       this.surveyService.deleteSurvey(id)
@@ -38,10 +57,5 @@ export class SurveyListComponent implements OnInit {
           error: (error) => console.error('Error deleting survey:', error)
         });
     }
-  }
-
-  onSurveyCreated() {
-    this.showCreateModal = false;
-    this.loadSurveys();
   }
 }

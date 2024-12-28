@@ -15,7 +15,7 @@
             <p class="text-gray-600 mb-4">{{survey.description}}</p>
             <div class="flex justify-end space-x-2">
                 <button 
-                    [routerLink]="['/surveys', survey.id]"
+                    (click)="onEditClick(survey)"
                     class="text-blue-500 hover:text-blue-600">
                     Edit
                 </button>
@@ -28,13 +28,24 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <app-modal 
+    <!-- Create Modal -->
+    <app-modal
         *ngIf="showCreateModal"
         title="Create New Survey"
         (onClose)="showCreateModal = false">
         <app-survey-create
             (surveyCreated)="onSurveyCreated()">
         </app-survey-create>
+    </app-modal>
+
+    <!-- Edit Modal -->
+    <app-modal
+        *ngIf="showEditModal"
+        title="Edit Survey"
+        (onClose)="showEditModal = false">
+        <app-survey-edit
+            [survey]="selectedSurvey!"
+            (surveyEdited)="onSurveyEdited()">
+        </app-survey-edit>
     </app-modal>
 </div>
