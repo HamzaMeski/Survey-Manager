@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { SurveyService } from '../../../core/services/survey.service';
 
 @Component({
@@ -10,15 +9,16 @@ import { SurveyService } from '../../../core/services/survey.service';
     imports: [CommonModule, ReactiveFormsModule],
     templateUrl: './survey-create.component.html'
 })
-
 export class SurveyCreateComponent {
     surveyForm!: FormGroup;
     isSubmitting = false;
 
+    @Output() surveyCreated = new EventEmitter<void>();
+    @Output() cancelled = new EventEmitter<void>();
+
     constructor(
         private fb: FormBuilder,
-        private surveyService: SurveyService,
-        private router: Router
+        private surveyService: SurveyService
     ) {
         this.createForm();
     }
@@ -46,19 +46,17 @@ export class SurveyCreateComponent {
             this.surveyService.createSurvey(this.surveyForm.value)
                 .subscribe({
                     next: () => {
-                        // Navigate back to survey list on success
-                        this.router.navigate(['/surveys']);
+                        this.surveyCreated.emit();
                     },
                     error: (error) => {
                         console.error('Error creating survey:', error);
                         this.isSubmitting = false;
-                        // Here you might want to show an error message to the user
                     }
                 });
         }
     }
 
     onCancel(): void {
-        this.router.navigate(['/surveys']);
+        this.cancelled.emit();
     }
 }

@@ -3,15 +3,18 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SurveyService } from '../../../core/services/survey.service';
 import { SurveyResponse } from '../../../models/survey.interface';
+import { SurveyCreateComponent } from '../survey-create/survey-create.component';
+import { ModalComponent } from '../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-survey-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, SurveyCreateComponent, ModalComponent],
   templateUrl: './survey-list.component.html'
 })
 export class SurveyListComponent implements OnInit {
   surveys: SurveyResponse[] = [];
+  showCreateModal = false;
 
   constructor(private surveyService: SurveyService) {}
 
@@ -35,5 +38,10 @@ export class SurveyListComponent implements OnInit {
           error: (error) => console.error('Error deleting survey:', error)
         });
     }
+  }
+
+  onSurveyCreated() {
+    this.showCreateModal = false;
+    this.loadSurveys();
   }
 }
