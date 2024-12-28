@@ -1,0 +1,53 @@
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Create New Survey</h1>
+        
+        <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()" class="space-y-6">
+            <!-- Title Field -->
+            <div>
+            <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+            <input 
+                type="text" 
+                id="title" 
+                formControlName="title"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
+                [ngClass]="{'border-red-500': isFieldInvalid('title')}"
+            >
+            <div *ngIf="isFieldInvalid('title')" class="text-red-500 text-sm mt-1">
+                Title is required
+            </div>
+            </div>
+
+            <!-- Description Field -->
+            <div>
+            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+            <textarea 
+                id="description" 
+                formControlName="description"
+                rows="4"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
+                [ngClass]="{'border-red-500': isFieldInvalid('description')}"
+            ></textarea>
+            <div *ngIf="isFieldInvalid('description')" class="text-red-500 text-sm mt-1">
+                Description is required
+            </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="flex justify-end space-x-4">
+            <button 
+                type="button" 
+                (click)="onCancel()"
+                class="px-4 py-2 text-gray-700 hover:text-gray-900">
+                Cancel
+            </button>
+            <button 
+                type="submit"
+                [disabled]="surveyForm.invalid || isSubmitting"
+                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-blue-300">
+                {{ isSubmitting ? 'Creating...' : 'Create Survey' }}
+            </button>
+            </div>
+        </form>
+    </div>
+  </div>

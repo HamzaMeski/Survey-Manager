@@ -10,12 +10,14 @@ public class SurveyRequestDTO {
     @NotBlank(message = "Title is required")
     private String title;
     
+    @NotBlank(message = "Title is required")
     private String description;
     
     @NotNull(message = "Status is required")
     private SurveyStatus status;
     
     private String category;
+    
     private String targetAudience;
     
     @NotNull(message = "Owner ID is required")
