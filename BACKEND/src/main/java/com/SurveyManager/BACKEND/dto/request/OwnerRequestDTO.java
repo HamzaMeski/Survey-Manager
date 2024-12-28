@@ -17,7 +17,4 @@ public class OwnerRequestDTO {
     
     @NotBlank(message = "Password is required")
     private String password;
-    
-    @NotNull(message = "Role is required")
-    private OwnerRole role;
 } 

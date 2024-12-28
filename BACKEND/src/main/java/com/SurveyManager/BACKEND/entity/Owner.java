@@ -22,8 +22,7 @@ public class Owner extends BaseEntity {
     private String password;
     
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private OwnerRole role;
+    private OwnerRole role = OwnerRole.ADMIN;
     
     private Boolean active = true;
     

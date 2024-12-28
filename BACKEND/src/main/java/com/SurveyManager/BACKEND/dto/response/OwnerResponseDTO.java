@@ -9,6 +9,5 @@ import lombok.EqualsAndHashCode;
 public class OwnerResponseDTO extends BaseResponseDTO {
     private String name;
     private String email;
-    private OwnerRole role;
     private Boolean active;
 }
