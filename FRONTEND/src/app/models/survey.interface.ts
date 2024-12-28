@@ -1,3 +1,5 @@
+import { Owner } from "./owner.interface";
+
 enum SurveyStatus {
     ACTIVE,
     INACTIVE,
@@ -20,7 +22,7 @@ export interface SurveyResponse {
     status: SurveyStatus
     category: string, 
     targetAudience: string, 
-    owner: any
+    owner: Owner
     createdAt: Date;
     updatedAt: Date;
 }
