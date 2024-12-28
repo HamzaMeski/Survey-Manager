@@ -14,7 +14,6 @@ export class SurveyCreateComponent {
     isSubmitting = false;
 
     @Output() surveyCreated = new EventEmitter<void>();
-    @Output() cancelled = new EventEmitter<void>();
 
     constructor(
         private fb: FormBuilder,
@@ -54,9 +53,5 @@ export class SurveyCreateComponent {
                     }
                 });
         }
-    }
-
-    onCancel(): void {
-        this.cancelled.emit();
     }
 }
