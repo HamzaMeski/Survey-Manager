@@ -27,8 +27,10 @@ export class SurveyCreateComponent {
         this.surveyForm = this.fb.group({
             title: ['', [Validators.required, Validators.minLength(3)]],
             description: ['', [Validators.required, Validators.minLength(10)]],
-            status: ['', [Validators.required]], 
-            ownerId: ['', [Validators.required]]
+            status: ['INACTIVE'], 
+            ownerId: ['', [Validators.required]], 
+            category: [''], 
+            targetAudience: ['']
         });
     }
 
