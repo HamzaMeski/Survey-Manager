@@ -6,17 +6,26 @@ import { SurveyResponse } from '../../../models/survey.interface';
 import { SurveyCreateComponent } from '../survey-create/survey-create.component';
 import { SurveyEditComponent } from '../survey-edit/survey-edit.component';
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
+import { ConfirmationModalComponent } from '../../../shared/components/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-survey-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, SurveyCreateComponent, SurveyEditComponent, ModalComponent],
+  imports: [
+    CommonModule, 
+    RouterModule, 
+    SurveyCreateComponent, 
+    SurveyEditComponent, 
+    ModalComponent,
+    ConfirmationModalComponent
+  ],
   templateUrl: './survey-list.component.html'
 })
 export class SurveyListComponent implements OnInit {
   surveys: SurveyResponse[] = [];
   showCreateModal = false;
   showEditModal = false;
+  showDeleteModal = false;
   selectedSurvey: SurveyResponse | null = null;
 
   constructor(private surveyService: SurveyService) {}
@@ -38,6 +47,25 @@ export class SurveyListComponent implements OnInit {
     this.showEditModal = true;
   }
 
+  onDeleteClick(survey: SurveyResponse): void {
+    this.selectedSurvey = survey;
+    this.showDeleteModal = true;
+  }
+
+  confirmDelete(): void {
+    if (this.selectedSurvey) {
+      this.surveyService.deleteSurvey(this.selectedSurvey.id)
+        .subscribe({
+          next: () => {
+            this.showDeleteModal = false;
+            this.selectedSurvey = null;
+            this.loadSurveys();
+          },
+          error: (error) => console.error('Error deleting survey:', error)
+        });
+    }
+  }
+
   onSurveyEdited(): void {
     this.showEditModal = false;
     this.selectedSurvey = null;
@@ -47,15 +75,5 @@ export class SurveyListComponent implements OnInit {
   onSurveyCreated(): void {
     this.showCreateModal = false;
     this.loadSurveys();
-  }
-
-  deleteSurvey(id: number): void {
-    if (confirm('Are you sure you want to delete this survey?')) {
-      this.surveyService.deleteSurvey(id)
-        .subscribe({
-          next: () => this.loadSurveys(),
-          error: (error) => console.error('Error deleting survey:', error)
-        });
-    }
   }
 }

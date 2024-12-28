@@ -20,7 +20,7 @@
                     Edit
                 </button>
                 <button 
-                    (click)="deleteSurvey(survey.id)"
+                    (click)="onDeleteClick(survey)"
                     class="text-red-500 hover:text-red-600">
                     Delete
                 </button>
@@ -48,4 +48,14 @@
             (surveyEdited)="onSurveyEdited()">
         </app-survey-edit>
     </app-modal>
+
+    <!-- Delete Confirmation Modal -->
+    <app-confirmation-modal
+        *ngIf="showDeleteModal"
+        title="Delete Survey"
+        message="Are you sure you want to delete this survey? This action cannot be undone."
+        confirmText="Delete"
+        (onConfirm)="confirmDelete()"
+        (onCancel)="showDeleteModal = false">
+    </app-confirmation-modal>
 </div>
