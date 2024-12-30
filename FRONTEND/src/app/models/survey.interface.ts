@@ -1,3 +1,4 @@
+import { Edition } from "./edition.interface";
 import { Owner } from "./owner.interface";
 
 enum SurveyStatus {
@@ -22,7 +23,8 @@ export interface SurveyResponse {
     status: SurveyStatus
     category: string, 
     targetAudience: string, 
-    owner: Owner
+    owner: Owner, 
+    editions: Edition[]
     createdAt: Date;
     updatedAt: Date;
 }
