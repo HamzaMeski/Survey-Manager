@@ -26,6 +26,7 @@ export class SurveyListComponent implements OnInit {
   showCreateModal = false;
   showEditModal = false;
   showDeleteModal = false;
+  showEditionsModal = false;
   selectedSurvey: SurveyResponse | null = null;
 
   constructor(private surveyService: SurveyService) {}
@@ -50,6 +51,11 @@ export class SurveyListComponent implements OnInit {
   onDeleteClick(survey: SurveyResponse): void {
     this.selectedSurvey = survey;
     this.showDeleteModal = true;
+  }
+
+  openEditionsModal(survey: SurveyResponse): void {
+    this.selectedSurvey = survey;
+    this.showEditionsModal = true;
   }
 
   confirmDelete(): void {
