@@ -14,7 +14,9 @@ export class EditionDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.editionId = +params['id'];
+      this.editionId = +params['id']
+      console.log(params)
+      console.log(params['id'])
       // We'll add loading logic later
     });
   }
