@@ -11,8 +11,8 @@ export interface SurveyRequest {
     title: string;
     description: string;
     status: SurveyStatus
-    category: string, 
-    targetAudience: string, 
+    category: string,
+    targetAudience: string,
     ownerId: number
 }
 
@@ -21,10 +21,10 @@ export interface SurveyResponse {
     title: string;
     description: string;
     status: SurveyStatus
-    category: string, 
-    targetAudience: string, 
-    owner: OwnerResponse, 
-    editions: EditionResponse[]
+    category: string,
+    targetAudience: string,
     createdAt: Date;
     updatedAt: Date;
+    owner: OwnerResponse,
+    editions: EditionResponse[]
 }

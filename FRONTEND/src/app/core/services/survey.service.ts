@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SurveyRequest, SurveyResponse } from '../../models/survey.interface';
+import {apiUrl} from './api.url';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SurveyService {
-    private apiUrl = 'http://localhost:8080/api/surveys';
+    private apiUrl = apiUrl+'/surveys'
 
     constructor(private http: HttpClient) { }
 

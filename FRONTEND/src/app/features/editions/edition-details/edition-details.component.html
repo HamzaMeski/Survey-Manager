@@ -2,3 +2,8 @@
   <h1 class="text-3xl font-bold mb-6">Edition Details</h1>
   <p>Edition ID: {{editionId}}</p>
 </div>
+
+
+<div *ngFor="let subject of editionSubjects">
+  {{subject.title}}
+</div>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import {SubjectResponse} from '../../../models/subject.interface';
+import {SubjectService} from '../../../core/services/subject.service';
 
 @Component({
     selector: 'app-edition-details',
@@ -10,14 +12,26 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EditionDetailsComponent implements OnInit {
   editionId: number | null = null
-  constructor(private route: ActivatedRoute) {}
+  editionSubjects: SubjectResponse[] | null = null
+
+  constructor(private subjectService:SubjectService, private route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.getCurrentEditionId()
+    this.loadEditionContent()
+  }
+
+  getCurrentEditionId() {
     this.route.params.subscribe(params => {
       this.editionId = +params['id']
-      console.log(params)
-      console.log(params['id'])
-      // We'll add loading logic later
     });
+  }
+
+  loadEditionContent() {
+    this.subjectService.getBySurveyEditionId(this.editionId!)
+      .subscribe({
+        next: (subjects => this.editionSubjects = subjects),
+        error: (error) => console.error('Error loading surveys:', error)
+      })
   }
 }
