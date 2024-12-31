@@ -1,15 +1,15 @@
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold">Surveys</h1>
-        <button 
+        <button
             (click)="showCreateModal = true"
             class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
             Create Survey
         </button>
     </div>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div *ngFor="let survey of surveys" 
+        <div *ngFor="let survey of surveys"
             class="border rounded-lg p-4 hover:shadow-lg transition-shadow">
             <h2 class="text-xl font-semibold mb-2">{{survey.title}}</h2>
             <p class="text-gray-600 mb-4">{{survey.description}}</p>
@@ -19,7 +19,7 @@
                 <div *ngIf="!survey.editions.length" class="text-gray-500 text-sm">
                     No editions available
                 </div>
-                <button 
+                <button
                     *ngIf="survey.editions.length"
                     (click)="openEditionsModal(survey)"
                     class="w-full text-left px-4 py-2 text-blue-600 hover:bg-blue-50 rounded transition-colors flex justify-between items-center">
@@ -28,12 +28,12 @@
                 </button>
             </div>
             <div class="flex justify-end space-x-2">
-                <button 
+                <button
                     (click)="onEditClick(survey)"
                     class="text-blue-500 hover:text-blue-600">
                     Edit
                 </button>
-                <button 
+                <button
                     (click)="onDeleteClick(survey)"
                     class="text-red-500 hover:text-red-600">
                     Delete
@@ -81,7 +81,8 @@
         <div class="p-4 ">
             <h2 class="text-xl font-semibold mb-4">{{ selectedSurvey?.title }} - Editions</h2>
             <div class="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
-                <div *ngFor="let edition of selectedSurvey?.editions" 
+                <div *ngFor="let edition of selectedSurvey?.editions"
+                     [routerLink] = "['/editions', edition.id]"
                      class="bg-white p-4 rounded-lg border hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start">
                         <div>
