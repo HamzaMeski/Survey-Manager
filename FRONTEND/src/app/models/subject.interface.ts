@@ -10,6 +10,8 @@ export interface SubjectResponse {
   description:string
   parentSubjectId:number
   subSubjects: SubjectResponse[]
+  level:number
+  path:string
   createdAt: Date
   updatedAt: Date
 }

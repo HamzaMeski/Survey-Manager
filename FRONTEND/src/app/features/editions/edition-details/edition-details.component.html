@@ -3,7 +3,9 @@
   <p>Edition ID: {{editionId}}</p>
 </div>
 
-
 <div *ngFor="let subject of editionSubjects">
-  {{subject.title}}
+  <div>title: {{subject.title}}</div>
+  <div>description: {{subject.description}}</div>
+  <div>level: {{subject.level}}</div>
+  <div>path: {{subject.path}}</div>
 </div>
