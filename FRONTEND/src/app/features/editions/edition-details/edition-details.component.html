@@ -1,11 +1,18 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold mb-6">Edition Details</h1>
-  <p>Edition ID: {{editionId}}</p>
-</div>
+<div class="container mx-auto px-4">
+  <div class="flex">
+    <!-- Left Side: Subject Tree -->
+    <div class="w-1/3 border-r border-gray-200 min-h-[calc(100vh-60px)]">
+      <app-subject-tree
+        [editionId]="editionId"
+        (subjectSelected)="onSubjectSelect($event)">
+      </app-subject-tree>
+    </div>
 
-<div *ngFor="let subject of editionSubjects">
-  <div>title: {{subject.title}}</div>
-  <div>description: {{subject.description}}</div>
-  <div>level: {{subject.level}}</div>
-  <div>path: {{subject.path}}</div>
+    <!-- Right Side: Content Panel -->
+    <div class="w-2/3 pl-4">
+      <app-content-panel
+        [selectedSubject]="selectedSubject">
+      </app-content-panel>
+    </div>
+  </div>
 </div>

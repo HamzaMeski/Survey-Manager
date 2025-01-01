@@ -6,6 +6,7 @@ export interface SubjectRequest {
 }
 
 export interface SubjectResponse {
+  id:number
   title:string
   description:string
   parentSubjectId:number

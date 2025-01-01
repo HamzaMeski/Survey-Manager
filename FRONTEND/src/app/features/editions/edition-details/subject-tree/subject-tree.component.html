@@ -1,0 +1,11 @@
+<!-- subject-tree.component.html -->
+<div class="p-4">
+  <h2 class="text-xl font-semibold mb-4">Subjects</h2>
+  <div class="space-y-2">
+    <app-subject-tree-item
+      *ngFor="let subject of subjects"
+      [subject]="subject"
+      (select)="onSubjectSelect($event)">
+    </app-subject-tree-item>
+  </div>
+</div>
