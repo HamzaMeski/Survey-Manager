@@ -12,13 +12,12 @@ import {SubjectService} from '../../../core/services/subject.service';
 })
 export class EditionDetailsComponent implements OnInit {
   editionId: number | null = null
-  editionSubjects: SubjectResponse[] | null = null
+  selectedSubject:SubjectResponse | null = null
 
   constructor(private subjectService:SubjectService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.getCurrentEditionId()
-    this.loadEditionContent()
   }
 
   getCurrentEditionId() {
@@ -27,11 +26,7 @@ export class EditionDetailsComponent implements OnInit {
     });
   }
 
-  loadEditionContent() {
-    this.subjectService.getSubjectsBySurveyEditionId(this.editionId!)
-      .subscribe({
-        next: (subjects => this.editionSubjects = subjects),
-        error: (error) => console.error('Error loading surveys:', error)
-      })
+  onSubjectSelect(subject: SubjectResponse) {
+    this.selectedSubject = subject
   }
 }
