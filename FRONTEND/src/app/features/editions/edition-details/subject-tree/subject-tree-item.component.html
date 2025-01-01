@@ -1,0 +1,56 @@
+<div class="w-full">
+  <!-- Subject Item -->
+  <div
+    [style.padding-left]="paddingLeft"
+    class="flex items-center py-2 px-2 hover:bg-gray-100 cursor-pointer group"
+    [class.bg-blue-50]="isLastLevel"
+    (click)="onSelect($event)">
+
+    <!-- Expand/Collapse Icon -->
+    <button
+      *ngIf="hasSubSubjects"
+      (click)="toggleExpand($event)"
+      class="w-6 h-6 flex items-center justify-center mr-2 rounded hover:bg-gray-200">
+      <svg
+        [class.rotate-90]="isExpanded"
+        class="w-4 h-4 transition-transform duration-200"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"/>
+      </svg>
+    </button>
+
+    <!-- Placeholder for alignment when no toggle button -->
+    <div *ngIf="!hasSubSubjects" class="w-6 mr-2"></div>
+
+    <!-- Subject Info -->
+    <div class="flex-1">
+      <div class="font-medium">{{subject.title}}</div>
+      <div class="text-sm text-gray-500">{{subject.description}}</div>
+    </div>
+
+    <!-- Level Indicator -->
+    <div *ngIf="isLastLevel"
+         class="ml-2 px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
+       Has Questions
+    </div>
+  </div>
+
+  <!-- Recursive Sub-subjects -->
+  <div *ngIf="hasSubSubjects && isExpanded"
+       class="transition-all duration-200"
+       [class.opacity-100]="isExpanded"
+       [class.opacity-0]="!isExpanded">
+    <app-subject-tree-item
+      *ngFor="let subSubject of subject.subSubjects"
+      [subject]="subSubject"
+      [level]="level + 1"
+      (select)="select.emit($event)">
+    </app-subject-tree-item>
+  </div>
+</div>

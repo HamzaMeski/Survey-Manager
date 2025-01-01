@@ -3,11 +3,17 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import {SubjectResponse} from '../../../models/subject.interface';
 import {SubjectService} from '../../../core/services/subject.service';
+import {SubjectTreeComponent} from './subject-tree/subject-tree.component';
+import {ContentPanelComponent} from './content-panel/content-panel.component';
 
 @Component({
     selector: 'app-edition-details',
     standalone: true,
-    imports: [CommonModule],
+    imports: [
+      CommonModule,
+      SubjectTreeComponent,
+      ContentPanelComponent
+    ],
     templateUrl: './edition-details.component.html'
 })
 export class EditionDetailsComponent implements OnInit {
