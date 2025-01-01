@@ -2,32 +2,33 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SurveyRequest, SurveyResponse } from '../../models/survey.interface';
+import {apiUrl} from './api.url';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class SurveyService {
-  private apiUrl = 'http://localhost:8080/api/surveys';
+    private apiUrl = apiUrl+'/surveys'
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-  getAllSurveys(): Observable<SurveyResponse[]> {
-    return this.http.get<SurveyResponse[]>(this.apiUrl);
-  }
+    getAllSurveys(): Observable<SurveyResponse[]> {
+        return this.http.get<SurveyResponse[]>(this.apiUrl);
+    }
 
-  getSurveyById(id: number): Observable<SurveyResponse> {
-    return this.http.get<SurveyResponse>(`${this.apiUrl}/${id}`);
-  }
+    getSurveyById(id: number): Observable<SurveyResponse> {
+        return this.http.get<SurveyResponse>(`${this.apiUrl}/${id}`);
+    }
 
-  createSurvey(survey: SurveyRequest): Observable<SurveyResponse> {
-    return this.http.post<SurveyResponse>(this.apiUrl, survey);
-  }
+    createSurvey(survey: SurveyRequest): Observable<SurveyResponse> {
+        return this.http.post<SurveyResponse>(this.apiUrl, survey);
+    }
 
-  updateSurvey(id: number, survey: SurveyRequest): Observable<SurveyResponse> {
-    return this.http.put<SurveyResponse>(`${this.apiUrl}/${id}`, survey);
-  }
+    updateSurvey(id: number, survey: SurveyRequest): Observable<SurveyResponse> {
+        return this.http.put<SurveyResponse>(`${this.apiUrl}/${id}`, survey);
+    }
 
-  deleteSurvey(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
+    deleteSurvey(id: number): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    }
 }

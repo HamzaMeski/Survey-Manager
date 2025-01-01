@@ -1,0 +1,11 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6">Edition Details</h1>
+  <p>Edition ID: {{editionId}}</p>
+</div>
+
+<div *ngFor="let subject of editionSubjects">
+  <div>title: {{subject.title}}</div>
+  <div>description: {{subject.description}}</div>
+  <div>level: {{subject.level}}</div>
+  <div>path: {{subject.path}}</div>
+</div>

@@ -1,5 +1,5 @@
-import { Edition } from "./edition.interface";
-import { Owner } from "./owner.interface";
+import { EditionResponse } from "./edition.interface";
+import { OwnerResponse } from "./owner.interface";
 
 enum SurveyStatus {
     ACTIVE,
@@ -11,8 +11,8 @@ export interface SurveyRequest {
     title: string;
     description: string;
     status: SurveyStatus
-    category: string, 
-    targetAudience: string, 
+    category: string,
+    targetAudience: string,
     ownerId: number
 }
 
@@ -21,10 +21,10 @@ export interface SurveyResponse {
     title: string;
     description: string;
     status: SurveyStatus
-    category: string, 
-    targetAudience: string, 
-    owner: Owner, 
-    editions: Edition[]
+    category: string,
+    targetAudience: string,
     createdAt: Date;
     updatedAt: Date;
+    owner: OwnerResponse,
+    editions: EditionResponse[]
 }
