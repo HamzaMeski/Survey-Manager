@@ -12,7 +12,7 @@ export class SubjectService {
 
   constructor(private http: HttpClient) { }
 
-  getBySurveyEditionId(id: number): Observable<SubjectResponse[]> {
+  getSubjectsBySurveyEditionId(id: number): Observable<SubjectResponse[]> {
     return this.http.get<SubjectResponse[]>(`${this.apiUrl}/survey-edition/${id}`)
   }
 }

@@ -28,7 +28,7 @@ export class EditionDetailsComponent implements OnInit {
   }
 
   loadEditionContent() {
-    this.subjectService.getBySurveyEditionId(this.editionId!)
+    this.subjectService.getSubjectsBySurveyEditionId(this.editionId!)
       .subscribe({
         next: (subjects => this.editionSubjects = subjects),
         error: (error) => console.error('Error loading surveys:', error)
