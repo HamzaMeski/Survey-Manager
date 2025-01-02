@@ -14,9 +14,9 @@ import {ContentPanelComponent} from './content-panel/content-panel.component';
       SubjectTreeComponent,
       ContentPanelComponent
     ],
-    templateUrl: './edition-details.component.html'
+    templateUrl: './edition.component.html'
 })
-export class EditionDetailsComponent implements OnInit {
+export class EditionComponent implements OnInit {
   editionId: number | null = null
   selectedSubject:SubjectResponse | null = null
 
