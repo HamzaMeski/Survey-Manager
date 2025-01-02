@@ -14,6 +14,7 @@ export interface QuestionRequest {
 }
 
 export interface QuestionResponse {
+    id:number
     text:string
     type:QuestionType
     required:boolean
