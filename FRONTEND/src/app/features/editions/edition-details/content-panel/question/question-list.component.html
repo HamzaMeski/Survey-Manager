@@ -1,0 +1,29 @@
+<div>
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-xl font-semibold">Questions for: {{subject?.title}}</h2>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      Add Question
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-8">
+    Loading questions...
+  </div>
+
+  <!-- Questions List -->
+  <div *ngIf="!isLoading" class="space-y-3">
+    <div *ngFor="let question of questions"
+         (click)="onSelect(question)"
+         class="p-4 border rounded-lg hover:bg-gray-50 cursor-pointer">
+      <div class="font-semibold">{{question.text}}</div>
+      <div class="text-gray-600">{{question.instructions}}</div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="questions.length === 0"
+         class="text-center text-gray-500 py-8">
+      No questions found for this subject
+    </div>
+  </div>
+</div>
