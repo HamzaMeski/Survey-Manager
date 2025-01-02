@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SubjectResponse} from '../../../../models/subject.interface';
-import {SubjectService} from '../../../../core/services/subject.service';
+import {SubjectResponse} from '../../../models/subject.interface';
+import {SubjectService} from '../../../core/services/subject.service';
 import {CommonModule} from '@angular/common';
 import {SubjectTreeItemComponent} from './subject-tree-item.component';
 

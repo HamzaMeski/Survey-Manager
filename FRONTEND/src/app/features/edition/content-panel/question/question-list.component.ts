@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange, SimpleChanges} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {QuestionResponse} from '../../../../../models/question.interface';
-import {SubjectResponse} from '../../../../../models/subject.interface';
-import {QuestionService} from '../../../../../core/services/question.service';
+import {QuestionResponse} from '../../../../models/question.interface';
+import {SubjectResponse} from '../../../../models/subject.interface';
+import {QuestionService} from '../../../../core/services/question.service';
 
 @Component({
   selector: 'app-question-list',

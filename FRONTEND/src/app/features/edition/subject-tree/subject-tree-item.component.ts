@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {SubjectResponse} from '../../../../models/subject.interface';
+import {SubjectResponse} from '../../../models/subject.interface';
 import {CommonModule} from '@angular/common';
 
 @Component({
