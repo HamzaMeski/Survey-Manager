@@ -3,6 +3,7 @@ package com.SurveyManager.BACKEND.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.SurveyManager.BACKEND.exception.DuplicateResourceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +35,7 @@ public class QuestionServiceImpl implements QuestionService {
             .orElseThrow(() -> new ResourceNotFoundException("Subject not found with id: " + subjectId));
     
         if(questionRepository.isQuestionAssignedToSubject(requestDTO.getText(), subjectId)) {
-            throw new ValidationException("Question already assigned to that subject");
+            throw new DuplicateResourceException("Question already assigned to that subject");
         }
 
         validateSubjectForQuestions(subject);
@@ -118,11 +119,11 @@ public class QuestionServiceImpl implements QuestionService {
         String parentPath = getParentPath(subject.getPath());
         
         // Check for siblings
-        if (hasSiblings(subject, parentPath)) {
-            throw new ValidationException(
-                "Cannot add questions to subject with siblings: " + subject.getTitle()
-            );
-        }
+//        if (hasSiblings(subject, parentPath)) {
+//            throw new ValidationException(
+//                "Cannot add questions to subject with siblings: " + subject.getTitle()
+//            );
+//        }
     }
 
     private String getParentPath(String path) {

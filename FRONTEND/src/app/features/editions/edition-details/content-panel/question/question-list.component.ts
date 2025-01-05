@@ -3,20 +3,29 @@ import {CommonModule} from '@angular/common';
 import {QuestionResponse} from '../../../../../models/question.interface';
 import {SubjectResponse} from '../../../../../models/subject.interface';
 import {QuestionService} from '../../../../../core/services/question.service';
+import {AddQuestionComponent} from './add-question/add-question.component';
+import {EditQuestionComponent} from './edit-question/edit-question.component';
 
 @Component({
   selector: 'app-question-list',
   imports: [
-    CommonModule
+    CommonModule,
+    AddQuestionComponent,
+    EditQuestionComponent
   ],
   templateUrl: './question-list.component.html'
 })
 export class QuestionListComponent implements OnInit, OnChanges {
-  @Input() subject: SubjectResponse  | null = null
-  @Output() questionSelected = new EventEmitter<QuestionResponse>();
+  @Input() subject!: SubjectResponse
+  @Output() questionSelected = new EventEmitter<QuestionResponse>()
 
-  questions: QuestionResponse[] = [];
-  isLoading = false;
+  questions: QuestionResponse[] = []
+  isLoading: boolean = false
+  displayAddQuestionForm: boolean = false
+  displayEditQuestionForm: boolean = false
+  confirmDeletion : boolean = false
+  clickedQuestionForDelete!: QuestionResponse
+  clickedQuestionForEdit!: QuestionResponse
 
   constructor(private questionService: QuestionService) {}
 
@@ -47,7 +56,28 @@ export class QuestionListComponent implements OnInit, OnChanges {
       });
   }
 
-  onSelect(question: QuestionResponse) {
+  onSelect(question: QuestionResponse): void {
     this.questionSelected.emit(question);
+  }
+
+  hasSubSubjects(): boolean {
+    return this.subject.subSubjects.length > 0
+  }
+
+  toggleAddQuestionInput(): void {
+     this.displayAddQuestionForm? this.displayAddQuestionForm = false : this.displayAddQuestionForm = true
+  }
+
+  onDelete(question: QuestionResponse): void {
+    this.questionService.deleteQuestion(question.id)
+      .subscribe({
+        next: (): void => {
+          this.confirmDeletion = true
+          this.loadQuestions()
+        },
+        error: (error): void => {
+          console.log('Error deleting question: ', error)
+        }
+      })
   }
 }

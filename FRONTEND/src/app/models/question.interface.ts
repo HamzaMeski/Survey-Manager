@@ -9,7 +9,6 @@ export interface QuestionRequest {
     text:string
     type:QuestionType
     required:boolean
-    orderIndex:number
     instructions:string
 }
 

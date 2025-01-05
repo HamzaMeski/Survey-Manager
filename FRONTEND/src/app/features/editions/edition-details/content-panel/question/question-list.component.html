@@ -1,7 +1,10 @@
 <div>
   <div class="flex justify-between items-center mb-6">
     <h2 class="text-xl font-semibold">Questions for: {{subject?.title}}</h2>
-    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+    <button
+      *ngIf="!hasSubSubjects()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      (click)="toggleAddQuestionInput()"
+    >
       Add Question
     </button>
   </div>
@@ -13,11 +16,43 @@
 
   <!-- Questions List -->
   <div *ngIf="!isLoading" class="space-y-3">
+    <app-add-question
+      *ngIf="!hasSubSubjects() && displayAddQuestionForm"
+      [subject]="subject"
+      (questionCreated)="loadQuestions()"
+      (onClose)="displayAddQuestionForm = false"
+    >
+    </app-add-question>
     <div *ngFor="let question of questions"
-         (click)="onSelect(question)"
          class="p-4 border rounded-lg hover:bg-gray-50 cursor-pointer">
-      <div class="font-semibold">{{question.text}}</div>
-      <div class="text-gray-600">{{question.instructions}}</div>
+
+      <section *ngIf="!(displayEditQuestionForm && clickedQuestionForEdit == question)">
+        <!-- question info -->
+        <div (click)="onSelect(question)">
+          <div class="font-semibold">{{question.text}}</div>
+          <div class="text-gray-600">{{question.instructions}}</div>
+        </div>
+        <!-- Edit button -->
+        <button class="bg-blue-500 py-1 px-2" (click)="displayEditQuestionForm = true; clickedQuestionForEdit = question">edit</button>
+        <!-- Delete button -->
+        <div  class="bg-red-300 inline py-1 px-2">
+          <button class="bg-red-500  py-1 px-2" (click)="confirmDeletion = true; clickedQuestionForDelete = question">delete</button>
+          <em *ngIf="confirmDeletion && question == clickedQuestionForDelete">
+            <em (click)="onDelete(question)">✅</em>
+            <em (click)="confirmDeletion = false">❌</em>
+          </em>
+        </div>
+      </section>
+
+      <app-edit-question
+        *ngIf="displayEditQuestionForm && clickedQuestionForEdit == question"
+        [subject]="subject"
+        [question]="question"
+        (questionEdited)="loadQuestions()"
+        (onClose)="displayEditQuestionForm = false"
+      >
+      </app-edit-question>
+
     </div>
 
     <!-- Empty State -->
