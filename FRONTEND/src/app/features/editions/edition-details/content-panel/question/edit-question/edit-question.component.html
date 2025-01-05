@@ -1,0 +1,36 @@
+
+<form [formGroup]="questionForm" (ngSubmit)="onSubmit()" class="bg-blue-400 p-2 flex flex-col">
+  <div class="m-2">
+    <div >question</div>
+    <input
+      formControlName="text"
+      type="text" placeholder="question"
+      [ngClass]="{'border-red-500 text-red-500': isFieldInvalid('text')}"
+    >
+    <div *ngIf="isFieldInvalid('text')" class="text-red-500">text must be at least 3 characters</div>
+  </div>
+
+  <div class="m-2">
+    <div>instructions</div>
+    <textarea formControlName="instructions"></textarea>
+  </div>
+
+  <div class="m-2">
+    <div>question type</div>
+    <select formControlName="type">
+      <option value="SINGLE_CHOICE">SINGLE_CHOICE</option>
+      <option value="MULTIPLE_CHOICE">MULTIPLE_CHOICE</option>
+    </select>
+  </div>
+
+  <div class="m-2">
+    <div>is it required?</div>
+    <select formControlName="required">
+      <option value="true">true</option>
+      <option value="false">false</option>
+    </select>
+  </div>
+
+  <button type="submit">submit</button>
+  <button class="bg-gray-400 p-1" (click)="onClose.emit()" >cancel</button>
+</form>

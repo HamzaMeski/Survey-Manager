@@ -21,9 +21,11 @@ export class QuestionListComponent implements OnInit, OnChanges {
 
   questions: QuestionResponse[] = []
   isLoading: boolean = false
-  isAddQuestionClicked: boolean = false
-  confirmDeletion :boolean = false
-  clickedQuestion!: QuestionResponse
+  displayAddQuestionForm: boolean = false
+  displayEditQuestionForm: boolean = false
+  confirmDeletion : boolean = false
+  clickedQuestionForDelete!: QuestionResponse
+  clickedQuestionForEdit!: QuestionResponse
 
   constructor(private questionService: QuestionService) {}
 
@@ -63,7 +65,7 @@ export class QuestionListComponent implements OnInit, OnChanges {
   }
 
   toggleAddQuestionInput(): void {
-     this.isAddQuestionClicked? this.isAddQuestionClicked = false : this.isAddQuestionClicked = true
+     this.displayAddQuestionForm? this.displayAddQuestionForm = false : this.displayAddQuestionForm = true
   }
 
   onDelete(question: QuestionResponse): void {

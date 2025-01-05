@@ -14,7 +14,8 @@ import {SubjectResponse} from '../../../../../../models/subject.interface';
 })
 export class AddQuestionComponent {
   @Input() subject!: SubjectResponse
-  @Output() questionCreated = new EventEmitter<void>()
+  @Output() questionCreated: EventEmitter<void> = new EventEmitter<void>()
+  @Output() onClose: EventEmitter<void> = new EventEmitter<void>()
   questionForm!: FormGroup
 
   constructor(
