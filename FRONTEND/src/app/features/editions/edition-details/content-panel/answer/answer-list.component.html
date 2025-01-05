@@ -41,7 +41,31 @@
       </app-add-answer>
       <div *ngFor="let answer of answers"
            class="p-3 bg-white border rounded-lg hover:bg-gray-50">
-        {{answer?.text}}
+        <section *ngIf="!(displayEditAnswerForm && clickedAnswerForEdit == answer)">
+          <!-- answer info -->
+          <div >
+            <div class="font-semibold">{{answer.text}}</div>
+          </div>
+          <!-- Edit button -->
+          <button class="bg-blue-500 py-1 px-2" (click)="displayEditAnswerForm = true; clickedAnswerForEdit = answer">edit</button>
+          <!-- Delete button -->
+          <div  class="bg-red-300 inline py-1 px-2">
+            <button class="bg-red-500  py-1 px-2" (click)="confirmDeletion = true; clickedAnswerForDelete = answer">delete</button>
+            <em *ngIf="confirmDeletion && answer == clickedAnswerForDelete">
+              <em (click)="onDelete(answer)">✅</em>
+              <em (click)="confirmDeletion = false">❌</em>
+            </em>
+          </div>
+        </section>
+
+        <app-edit-answer
+          *ngIf="displayEditAnswerForm && clickedAnswerForEdit == answer"
+          [answer]="answer"
+          (answerEdited)="loadAnswers()"
+          (onClose)="displayEditAnswerForm = false"
+        >
+        </app-edit-answer>
+
       </div>
 
       <!-- Empty State -->

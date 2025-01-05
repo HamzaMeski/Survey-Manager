@@ -34,7 +34,7 @@ public class AnswerServiceImpl implements AnswerService {
             .orElseThrow(() -> new ResourceNotFoundException("Question not found with id: " + questionId));
         
         if(answerRepository.isAnswerAssignedToQuestion(requestDTO.getText(), questionId)) {
-            throw new ValidationException("Answer already exists");
+            throw new ResourceNotFoundException("Answer already exists");
         }
 
         Answer answer = answerMapper.toEntity(requestDTO);
@@ -83,6 +83,10 @@ public class AnswerServiceImpl implements AnswerService {
     public AnswerResponseDTO update(Long id, AnswerRequestDTO requestDTO) {
         Answer answer = answerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Answer not found with id: " + id));
+
+        if(answerRepository.isAnswerAssignedToQuestion2(requestDTO.getText(), answer.getId())) {
+            throw new ResourceNotFoundException("Answer already exists");
+        }
 
         answerMapper.updateEntity(answer, requestDTO);
         answer = answerRepository.save(answer);

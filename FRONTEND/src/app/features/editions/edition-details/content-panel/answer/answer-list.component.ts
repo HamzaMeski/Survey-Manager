@@ -5,21 +5,27 @@ import {AnswerResponse} from '../../../../../models/answer.interface';
 import {AnswerService} from '../../../../../core/services/answer.service';
 import {AddAnswerComponent} from './add-question/add-answer.component';
 import {EditAnswerComponent} from './edit-question/edit-answer.component';
+import {EditQuestionComponent} from '../question/edit-question/edit-question.component';
 
 @Component({
   selector: 'app-answer-list',
-	imports: [
-		CommonModule,
+  imports: [
+    CommonModule,
     AddAnswerComponent,
-    EditAnswerComponent
-	],
+    EditAnswerComponent,
+    EditQuestionComponent
+  ],
   templateUrl: './answer-list.component.html'
 })
 export class AnswerListComponent implements OnInit {
   @Input() question!: QuestionResponse
   @Output() backToQuestions = new EventEmitter<void>();
 
+  clickedAnswerForEdit!: AnswerResponse
+  clickedAnswerForDelete!: AnswerResponse
   displayAddAnswerForm: boolean = false
+  displayEditAnswerForm: boolean = false
+  confirmDeletion: boolean = false
 
   answers: AnswerResponse[] = [];
   isLoading = false;
@@ -55,4 +61,16 @@ export class AnswerListComponent implements OnInit {
     this.displayAddAnswerForm? this.displayAddAnswerForm = false : this.displayAddAnswerForm = true
   }
 
+  onDelete(answer: AnswerResponse): void {
+    this.answerService.deleteAnswer(answer.id)
+      .subscribe({
+        next: (): void => {
+          this.confirmDeletion = true
+          this.loadAnswers()
+        },
+        error: (error): void => {
+          console.log('Error deleting answer: ', error)
+        }
+      })
+  }
 }
