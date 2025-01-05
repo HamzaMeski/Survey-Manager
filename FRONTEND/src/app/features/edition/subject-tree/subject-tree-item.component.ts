@@ -14,21 +14,21 @@ export class SubjectTreeItemComponent {
 
   isExpanded: boolean = false;
 
-  get hasSubSubjects(): boolean {
+  hasSubSubjects(): boolean {
     return this.subject.subSubjects && this.subject.subSubjects.length > 0;
   }
 
-  get isLastLevel(): boolean {
+  isLastLevel(): boolean {
     return !this.hasSubSubjects;
   }
 
-  get paddingLeft(): string {
+  paddingLeft(): string {
     return `${this.level * 1.5}rem`;
   }
 
   toggleExpand(event: Event) {
     event.stopPropagation();
-    if (this.hasSubSubjects) {
+    if (this.hasSubSubjects()) {
       this.isExpanded = !this.isExpanded;
     }
   }
