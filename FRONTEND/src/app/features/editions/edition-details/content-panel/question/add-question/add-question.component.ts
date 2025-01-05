@@ -17,6 +17,7 @@ export class AddQuestionComponent {
   @Output() questionCreated: EventEmitter<void> = new EventEmitter<void>()
   @Output() onClose: EventEmitter<void> = new EventEmitter<void>()
   questionForm!: FormGroup
+  serverValidationMessage!: string
 
   constructor(
     private fb: FormBuilder,
@@ -47,8 +48,8 @@ export class AddQuestionComponent {
           next: (): void => {
             this.questionCreated.emit()
           },
-          error: (error) => {
-            console.error('Error creating question: ', error)
+          error: (object) => {
+            this.serverValidationMessage = object.error.message
           }
         })
     }

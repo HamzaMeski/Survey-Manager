@@ -31,6 +31,11 @@
     </select>
   </div>
 
+  <!-- server validation warnings message -->
+  <div class="font-bold text-red-400">
+    {{ serverValidationMessage }}
+  </div>
+
   <button class="bg-gray-200 p-1" type="submit">submit</button>
   <button class="bg-gray-400 p-1" (click)="onClose.emit()" >cancel</button>
 </form>
