@@ -1,0 +1,9 @@
+
+<div
+  class="h-[300px] w-[400px] bg-green-400 relative top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+  <div>{{title}}</div>
+  <div class="h-full w-full">
+        <ng-content></ng-content>
+  </div>
+  <button (click)="onClose.emit()">Cancel</button>
+</div>

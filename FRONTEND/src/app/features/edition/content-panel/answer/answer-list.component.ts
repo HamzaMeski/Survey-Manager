@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {QuestionResponse} from '../../../../../models/question.interface';
-import {AnswerResponse} from '../../../../../models/answer.interface';
-import {AnswerService} from '../../../../../core/services/answer.service';
+import {QuestionResponse} from '../../../../models/question.interface';
+import {AnswerResponse} from '../../../../models/answer.interface';
+import {AnswerService} from '../../../../core/services/answer.service';
 
 @Component({
   selector: 'app-answer-list',

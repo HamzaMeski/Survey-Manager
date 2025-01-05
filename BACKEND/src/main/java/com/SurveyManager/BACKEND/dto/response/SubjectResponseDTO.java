@@ -10,7 +10,7 @@ public class SubjectResponseDTO extends BaseResponseDTO {
     private String title;
     private String description;
     private Long parentSubjectId;
-    private List<SubjectResponseDTO> subSubjects;
     private Integer level;
     private String path;
+    private List<SubjectResponseDTO> subSubjects;
 } 

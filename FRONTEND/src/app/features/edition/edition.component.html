@@ -1,14 +1,15 @@
-<div class="container mx-auto px-4">
+<div>Edition survey id: {{edition.surveyId}}</div>
+<div>Edition version  : {{edition.version}}</div>
+<div>Edition year     :{{edition.year}}</div>
+<div class="container mx-auto px-4 bg-green-200 h-screen">
   <div class="flex">
-    <!-- Left Side: Subject Tree -->
-    <div class="w-1/3 border-r border-gray-200 min-h-[calc(100vh-60px)]">
+    <div class="w-1/3 border-r border-white min-h-[calc(100vh-60px)]">
       <app-subject-tree
         [editionId]="editionId"
         (subjectSelected)="onSubjectSelect($event)">
       </app-subject-tree>
     </div>
 
-    <!-- Right Side: Content Panel -->
     <div class="w-2/3 pl-4">
       <app-content-panel
         [selectedSubject]="selectedSubject">
