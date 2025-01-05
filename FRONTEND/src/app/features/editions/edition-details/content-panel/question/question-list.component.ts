@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {QuestionResponse} from '../../../../../models/question.interface';
 import {SubjectResponse} from '../../../../../models/subject.interface';
 import {QuestionService} from '../../../../../core/services/question.service';
-import {InputComponent} from '../../../../../shared/components/input/input.component';
 import {AddQuestionComponent} from './add-question/add-question.component';
 import {EditQuestionComponent} from './edit-question/edit-question.component';
 
@@ -24,6 +23,7 @@ export class QuestionListComponent implements OnInit, OnChanges {
   isLoading: boolean = false
   isAddQuestionClicked: boolean = false
   confirmDeletion :boolean = false
+  clickedQuestion!: QuestionResponse
 
   constructor(private questionService: QuestionService) {}
 

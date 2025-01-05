@@ -33,9 +33,9 @@
         </div>
         <button class="bg-blue-500 py-1 px-2">edit</button>
         <div  class="bg-red-300 inline py-1 px-2">
-          <button class="bg-red-500  py-1 px-2" (click)="confirmDeletion = true">delete</button>
-          <em *ngIf="confirmDeletion" (click)="onDelete(question)">✅</em>
-          <em *ngIf="confirmDeletion" (click)="confirmDeletion = false">❌</em>
+          <button class="bg-red-500  py-1 px-2" (click)="confirmDeletion = true; clickedQuestion = question">delete</button>
+          <em *ngIf="confirmDeletion && question == clickedQuestion" (click)="onDelete(question)">✅</em>
+          <em *ngIf="confirmDeletion && question == clickedQuestion" (click)="confirmDeletion = false">❌</em>
         </div>
       </div>
     </div>
