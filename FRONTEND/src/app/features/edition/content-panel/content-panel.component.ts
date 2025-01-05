@@ -15,16 +15,16 @@ import {AnswerListComponent} from './answer/answer-list.component';
   templateUrl: './content-panel.component.html'
 })
 export class ContentPanelComponent implements OnChanges {
-  @Input() selectedSubject: SubjectResponse | null = null;
-  selectedQuestion: QuestionResponse | null = null;
+  @Input() selectedSubject!: SubjectResponse
+  selectedQuestion: QuestionResponse | null = null
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedSubject']) {
-      this.selectedQuestion = null;
+      this.selectedQuestion = null
     }
   }
 
   onQuestionSelect(question: QuestionResponse) {
-    this.selectedQuestion = question;
+    this.selectedQuestion = question
   }
 }

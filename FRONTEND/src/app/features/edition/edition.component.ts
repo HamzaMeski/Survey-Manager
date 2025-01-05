@@ -17,8 +17,8 @@ import {ContentPanelComponent} from './content-panel/content-panel.component';
     templateUrl: './edition.component.html'
 })
 export class EditionComponent implements OnInit {
-  editionId: number | null = null
-  selectedSubject:SubjectResponse | null = null
+  editionId!: number
+  selectedSubject!:SubjectResponse
 
   constructor(private subjectService:SubjectService, private route: ActivatedRoute) {}
 

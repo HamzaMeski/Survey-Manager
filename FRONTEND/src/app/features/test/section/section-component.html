@@ -1,0 +1,15 @@
+
+
+<section
+  class="p-1 h-screen w-screen bg-yellow-200 absolute"
+>
+  <button (click)="openModal = true" class="bg-gray-100"><strong>open popup</strong></button>
+
+  <!-- modal -->
+  <app-modal
+    *ngIf="openModal"
+    (onClose)="openModal = false"
+  >
+    form test
+  </app-modal>
+</section>
