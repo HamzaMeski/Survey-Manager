@@ -14,6 +14,7 @@ import {QuestionService} from '../../../../core/services/question.service';
 export class QuestionListComponent implements OnInit, OnChanges {
   @Input() subject: SubjectResponse  | null = null
   @Output() questionSelected = new EventEmitter<QuestionResponse>();
+  isQuestionSelected: boolean = false
 
   questions: QuestionResponse[] = [];
   isLoading = false;
@@ -38,6 +39,7 @@ export class QuestionListComponent implements OnInit, OnChanges {
       .subscribe({
         next: (questions) => {
           this.questions = questions;
+          this.isQuestionSelected = this.questions.length > 0;
           this.isLoading = false;
         },
         error: (error) => {
