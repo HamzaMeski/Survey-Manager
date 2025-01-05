@@ -20,6 +20,7 @@ export class EditQuestionComponent implements OnInit{
   @Output() onClose: EventEmitter<void> = new EventEmitter<void>()
 
   questionForm!: FormGroup
+  serverValidationMessage!: string
 
   constructor(
     private fb: FormBuilder,
@@ -39,7 +40,12 @@ export class EditQuestionComponent implements OnInit{
 
   ngOnInit(): void {
     if(this.question) {
-
+      this.questionForm.patchValue({
+        text: this.question.text,
+        instructions: this.question.instructions,
+        required: this.question.required,
+        type: this.question.type
+      })
     }
   }
 
@@ -51,13 +57,14 @@ export class EditQuestionComponent implements OnInit{
   onSubmit(): void {
     if(this.questionForm.valid) {
       console.log(this.questionForm.value)
-      this.questionService.createQuestion(this.subject.id, this.questionForm.value)
+      this.questionService.updateQuestion(this.question.id, this.questionForm.value)
         .subscribe({
           next: (): void => {
             this.questionEdited.emit()
           },
-          error: (error) => {
-            console.error('Error creating question: ', error)
+          error: (object) => {
+            console.error('Error creating question: ', object)
+            this.serverValidationMessage = object.error.message
           }
         })
     }
