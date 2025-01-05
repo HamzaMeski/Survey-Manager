@@ -18,11 +18,12 @@ import {EditQuestionComponent} from './edit-question/edit-question.component';
 })
 export class QuestionListComponent implements OnInit, OnChanges {
   @Input() subject!: SubjectResponse
-  @Output() questionSelected = new EventEmitter<QuestionResponse>();
+  @Output() questionSelected = new EventEmitter<QuestionResponse>()
 
-  questions: QuestionResponse[] = [];
-  isLoading = false;
-  isAddQuestionClicked = false;
+  questions: QuestionResponse[] = []
+  isLoading: boolean = false
+  isAddQuestionClicked: boolean = false
+  confirmDeletion :boolean = false
 
   constructor(private questionService: QuestionService) {}
 
@@ -53,7 +54,7 @@ export class QuestionListComponent implements OnInit, OnChanges {
       });
   }
 
-  onSelect(question: QuestionResponse) {
+  onSelect(question: QuestionResponse): void {
     this.questionSelected.emit(question);
   }
 
@@ -63,5 +64,18 @@ export class QuestionListComponent implements OnInit, OnChanges {
 
   toggleAddQuestionInput(): void {
      this.isAddQuestionClicked? this.isAddQuestionClicked = false : this.isAddQuestionClicked = true
+  }
+
+  onDelete(question: QuestionResponse): void {
+    this.questionService.deleteQuestion(question.id)
+      .subscribe({
+        next: (): void => {
+          this.confirmDeletion = true
+          this.loadQuestions()
+        },
+        error: (error): void => {
+          console.log('Error deleting question: ', error)
+        }
+      })
   }
 }

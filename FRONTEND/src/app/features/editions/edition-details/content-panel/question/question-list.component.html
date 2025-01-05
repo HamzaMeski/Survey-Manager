@@ -23,10 +23,21 @@
     >
     </app-add-question>
     <div *ngFor="let question of questions"
-         (click)="onSelect(question)"
          class="p-4 border rounded-lg hover:bg-gray-50 cursor-pointer">
-      <div class="font-semibold">{{question.text}}</div>
-      <div class="text-gray-600">{{question.instructions}}</div>
+      <div>
+        <div
+          (click)="onSelect(question)"
+        >
+          <div class="font-semibold">{{question.text}}</div>
+          <div class="text-gray-600">{{question.instructions}}</div>
+        </div>
+        <button class="bg-blue-500 py-1 px-2">edit</button>
+        <div  class="bg-red-300 inline py-1 px-2">
+          <button class="bg-red-500  py-1 px-2" (click)="confirmDeletion = true">delete</button>
+          <em *ngIf="confirmDeletion" (click)="onDelete(question)">✅</em>
+          <em *ngIf="confirmDeletion" (click)="confirmDeletion = false">❌</em>
+        </div>
+      </div>
     </div>
 
     <!-- Empty State -->

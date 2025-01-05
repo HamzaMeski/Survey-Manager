@@ -19,4 +19,8 @@ export class QuestionService {
   getQuestionsBySubjectId(id: number): Observable<QuestionResponse[]> {
     return this.http.get<QuestionResponse[]>(`${this.apiUrl}/subject/${id}`)
   }
+
+  deleteQuestion(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }
