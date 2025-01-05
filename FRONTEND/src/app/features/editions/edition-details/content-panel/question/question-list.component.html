@@ -1,7 +1,10 @@
 <div>
   <div class="flex justify-between items-center mb-6">
     <h2 class="text-xl font-semibold">Questions for: {{subject?.title}}</h2>
-    <button *ngIf="!hasSubSubjects()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+    <button
+      *ngIf="!hasSubSubjects()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      (click)="toggleAddQuestionInput()"
+    >
       Add Question
     </button>
   </div>
@@ -14,7 +17,7 @@
   <!-- Questions List -->
   <div *ngIf="!isLoading" class="space-y-3">
     <app-add-question
-      *ngIf="!hasSubSubjects()"
+      *ngIf="!hasSubSubjects() && isAddQuestionClicked"
       [subject]="subject"
     >
     </app-add-question>

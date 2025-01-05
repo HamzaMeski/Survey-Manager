@@ -22,6 +22,7 @@ export class QuestionListComponent implements OnInit, OnChanges {
 
   questions: QuestionResponse[] = [];
   isLoading = false;
+  isAddQuestionClicked = false;
 
   constructor(private questionService: QuestionService) {}
 
@@ -58,5 +59,9 @@ export class QuestionListComponent implements OnInit, OnChanges {
 
   hasSubSubjects(): boolean {
     return this.subject.subSubjects.length > 0
+  }
+
+  toggleAddQuestionInput(): void {
+     this.isAddQuestionClicked? this.isAddQuestionClicked = false : this.isAddQuestionClicked = true
   }
 }
