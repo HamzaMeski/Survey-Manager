@@ -118,11 +118,11 @@ public class QuestionServiceImpl implements QuestionService {
         String parentPath = getParentPath(subject.getPath());
         
         // Check for siblings
-        if (hasSiblings(subject, parentPath)) {
-            throw new ValidationException(
-                "Cannot add questions to subject with siblings: " + subject.getTitle()
-            );
-        }
+//        if (hasSiblings(subject, parentPath)) {
+//            throw new ValidationException(
+//                "Cannot add questions to subject with siblings: " + subject.getTitle()
+//            );
+//        }
     }
 
     private String getParentPath(String path) {
