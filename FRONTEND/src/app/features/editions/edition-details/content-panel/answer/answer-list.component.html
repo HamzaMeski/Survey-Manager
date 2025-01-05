@@ -17,7 +17,10 @@
   <div>
     <div class="flex justify-between items-center mb-4">
       <h3 class="text-lg font-semibold">Answers</h3>
-      <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+      <button
+        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+        (click)="toggleAddQuestionInput()"
+      >
         Add Answer
       </button>
     </div>
@@ -29,6 +32,13 @@
 
     <!-- Answers List -->
     <div *ngIf="!isLoading" class="space-y-3">
+      <app-add-answer
+        *ngIf="displayAddAnswerForm"
+        [question]="question"
+        (answerCreated)="loadAnswers()"
+        (onClose)="displayAddAnswerForm = false"
+      >
+      </app-add-answer>
       <div *ngFor="let answer of answers"
            class="p-3 bg-white border rounded-lg hover:bg-gray-50">
         {{answer?.text}}

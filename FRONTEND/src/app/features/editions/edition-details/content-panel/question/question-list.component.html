@@ -46,7 +46,6 @@
 
       <app-edit-question
         *ngIf="displayEditQuestionForm && clickedQuestionForEdit == question"
-        [subject]="subject"
         [question]="question"
         (questionEdited)="loadQuestions()"
         (onClose)="displayEditQuestionForm = false"

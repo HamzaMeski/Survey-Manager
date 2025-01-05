@@ -3,17 +3,23 @@ import {CommonModule} from '@angular/common';
 import {QuestionResponse} from '../../../../../models/question.interface';
 import {AnswerResponse} from '../../../../../models/answer.interface';
 import {AnswerService} from '../../../../../core/services/answer.service';
+import {AddAnswerComponent} from './add-question/add-answer.component';
+import {EditAnswerComponent} from './edit-question/edit-answer.component';
 
 @Component({
   selector: 'app-answer-list',
-  imports: [
-    CommonModule
-  ],
+	imports: [
+		CommonModule,
+    AddAnswerComponent,
+    EditAnswerComponent
+	],
   templateUrl: './answer-list.component.html'
 })
 export class AnswerListComponent implements OnInit {
-  @Input() question: QuestionResponse  | null = null
+  @Input() question!: QuestionResponse
   @Output() backToQuestions = new EventEmitter<void>();
+
+  displayAddAnswerForm: boolean = false
 
   answers: AnswerResponse[] = [];
   isLoading = false;
@@ -44,4 +50,9 @@ export class AnswerListComponent implements OnInit {
   goBackToQuestions() {
     this.backToQuestions.emit();
   }
+
+  toggleAddQuestionInput(): void {
+    this.displayAddAnswerForm? this.displayAddAnswerForm = false : this.displayAddAnswerForm = true
+  }
+
 }
