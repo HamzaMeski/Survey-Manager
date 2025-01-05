@@ -24,4 +24,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     
     @Query("SELECT COUNT(q)>0 FROM Question q WHERE q.text = :questionText AND q.subject.id = :subjectId")
     boolean isQuestionAssignedToSubject(@Param("questionText") String questionText, @Param("subjectId") Long subjectId);
+
+    @Query("SELECT COUNT(q)>0 FROM Question q WHERE q.text = :questionText AND q.id != :questionId")
+    boolean isQuestionAssignedToSubject2(@Param("questionText") String questionText, @Param("questionId") Long questionId);
 } 

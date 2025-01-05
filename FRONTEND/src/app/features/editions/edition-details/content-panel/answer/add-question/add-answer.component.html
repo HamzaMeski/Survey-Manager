@@ -1,0 +1,20 @@
+
+<form [formGroup]="answerForm" (ngSubmit)="onSubmit()" class="bg-green-400 p-2 flex flex-col">
+  <div class="m-2">
+    <div >answer</div>
+    <input
+      formControlName="text"
+      type="text" placeholder="answer"
+      [ngClass]="{'border-red-500 text-red-500': isFieldInvalid('text')}"
+    >
+    <div *ngIf="isFieldInvalid('text')" class="text-red-500">text must be at least 3 characters</div>
+  </div>
+
+  <!-- server validation warnings message -->
+  <div class="font-bold text-red-400">
+    {{ serverValidationMessage }}
+  </div>
+
+  <button class="bg-gray-200 p-1" type="submit">submit</button>
+  <button class="bg-gray-400 p-1" (click)="onClose.emit()" >cancel</button>
+</form>

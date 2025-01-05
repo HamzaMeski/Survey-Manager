@@ -14,7 +14,6 @@ import {QuestionService} from '../../../../../../core/services/question.service'
   templateUrl: './edit-question.component.html'
 })
 export class EditQuestionComponent implements OnInit{
-  @Input() subject!: SubjectResponse
   @Input() question!: QuestionResponse
   @Output() questionEdited: EventEmitter<void> = new EventEmitter<void>()
   @Output() onClose: EventEmitter<void> = new EventEmitter<void>()
