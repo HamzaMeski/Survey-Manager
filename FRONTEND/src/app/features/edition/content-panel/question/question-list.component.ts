@@ -37,7 +37,7 @@ export class QuestionListComponent implements OnInit, OnChanges {
     this.isLoading = true;
     this.questionService.getQuestionsBySubjectId(this.subject.id)
       .subscribe({
-        next: (questions) => {
+        next: (questions: QuestionResponse[]) => {
           this.questions = questions;
           this.isQuestionSelected = this.questions.length > 0;
           this.isLoading = false;
