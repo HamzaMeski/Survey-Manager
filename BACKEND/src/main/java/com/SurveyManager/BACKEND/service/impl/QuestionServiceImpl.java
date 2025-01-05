@@ -82,7 +82,11 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionResponseDTO update(Long id, QuestionRequestDTO requestDTO) {
         Question question = questionRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Question not found with id: " + id));
-        
+
+        if(questionRepository.isQuestionAssignedToSubject2(requestDTO.getText(), question.getId())) {
+            throw new DuplicateResourceException("Question already assigned to that subject");
+        }
+
         // If order index is changing, validate new position
         if (requestDTO.getOrderIndex() != null && 
             !requestDTO.getOrderIndex().equals(question.getOrderIndex()) &&
