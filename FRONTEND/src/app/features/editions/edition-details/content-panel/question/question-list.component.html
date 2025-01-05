@@ -19,6 +19,7 @@
     <app-add-question
       *ngIf="!hasSubSubjects() && isAddQuestionClicked"
       [subject]="subject"
+      (questionCreated)="loadQuestions()"
     >
     </app-add-question>
     <div *ngFor="let question of questions"

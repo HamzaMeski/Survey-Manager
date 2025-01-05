@@ -12,6 +12,10 @@ export class QuestionService {
 
   constructor(private http:HttpClient) { }
 
+  createQuestion(subjectId: number, question:QuestionResponse): Observable<QuestionResponse> {
+    return this.http.post<QuestionResponse>(`${this.apiUrl}/subject/${subjectId}`, question)
+  }
+
   getQuestionsBySubjectId(id: number): Observable<QuestionResponse[]> {
     return this.http.get<QuestionResponse[]>(`${this.apiUrl}/subject/${id}`)
   }
