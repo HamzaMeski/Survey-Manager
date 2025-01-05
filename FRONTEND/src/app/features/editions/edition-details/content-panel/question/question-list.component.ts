@@ -3,16 +3,21 @@ import {CommonModule} from '@angular/common';
 import {QuestionResponse} from '../../../../../models/question.interface';
 import {SubjectResponse} from '../../../../../models/subject.interface';
 import {QuestionService} from '../../../../../core/services/question.service';
+import {InputComponent} from '../../../../../shared/components/input/input.component';
+import {AddQuestionComponent} from './add-question/add-question.component';
+import {EditQuestionComponent} from './edit-question/edit-question.component';
 
 @Component({
   selector: 'app-question-list',
   imports: [
-    CommonModule
+    CommonModule,
+    AddQuestionComponent,
+    EditQuestionComponent
   ],
   templateUrl: './question-list.component.html'
 })
 export class QuestionListComponent implements OnInit, OnChanges {
-  @Input() subject: SubjectResponse  | null = null
+  @Input() subject!: SubjectResponse
   @Output() questionSelected = new EventEmitter<QuestionResponse>();
 
   questions: QuestionResponse[] = [];
@@ -49,5 +54,9 @@ export class QuestionListComponent implements OnInit, OnChanges {
 
   onSelect(question: QuestionResponse) {
     this.questionSelected.emit(question);
+  }
+
+  hasSubSubjects(): boolean {
+    return this.subject.subSubjects.length > 0
   }
 }
