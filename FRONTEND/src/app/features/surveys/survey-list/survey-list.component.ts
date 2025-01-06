@@ -12,10 +12,10 @@ import { ConfirmationModalComponent } from '../../../shared/components/confirmat
   selector: 'app-survey-list',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterModule, 
-    SurveyCreateComponent, 
-    SurveyEditComponent, 
+    CommonModule,
+    RouterModule,
+    SurveyCreateComponent,
+    SurveyEditComponent,
     ModalComponent,
     ConfirmationModalComponent
   ],
@@ -23,11 +23,13 @@ import { ConfirmationModalComponent } from '../../../shared/components/confirmat
 })
 export class SurveyListComponent implements OnInit {
   surveys: SurveyResponse[] = [];
-  showCreateModal = false;
-  showEditModal = false;
-  showDeleteModal = false;
+  showCreateSurveyModal = false;
+  showEditSurveyModal = false;
+  showDeleteSurveyModal = false;
   showEditionsModal = false;
   selectedSurvey: SurveyResponse | null = null;
+
+  showCreateEditionModal: boolean = false
 
   constructor(private surveyService: SurveyService) {}
 
@@ -45,12 +47,12 @@ export class SurveyListComponent implements OnInit {
 
   onEditClick(survey: SurveyResponse): void {
     this.selectedSurvey = survey;
-    this.showEditModal = true;
+    this.showEditSurveyModal = true;
   }
 
   onDeleteClick(survey: SurveyResponse): void {
     this.selectedSurvey = survey;
-    this.showDeleteModal = true;
+    this.showDeleteSurveyModal = true;
   }
 
   openEditionsModal(survey: SurveyResponse): void {
@@ -63,7 +65,7 @@ export class SurveyListComponent implements OnInit {
       this.surveyService.deleteSurvey(this.selectedSurvey.id)
         .subscribe({
           next: () => {
-            this.showDeleteModal = false;
+            this.showDeleteSurveyModal = false;
             this.selectedSurvey = null;
             this.loadSurveys();
           },
@@ -73,13 +75,26 @@ export class SurveyListComponent implements OnInit {
   }
 
   onSurveyEdited(): void {
-    this.showEditModal = false;
+    this.showEditSurveyModal = false;
     this.selectedSurvey = null;
     this.loadSurveys();
   }
 
   onSurveyCreated(): void {
-    this.showCreateModal = false;
+    this.showCreateSurveyModal = false;
     this.loadSurveys();
+  }
+
+  getRandomItem(arr :number[] | string[]): string | number {
+    const index: number = Math.floor(Math.random() * arr.length)
+    return arr[index]
+  }
+
+  bgFn(): string {
+    const tailwindValidNumbers: number[] = [400, 500, 600]
+    const tailwindValidColors: string[] = ['red', 'blue', 'green', 'yellow', 'purple']
+    //console.log(`text-gray-200 bg-${this.getRandomItem(tailwindValidColors)}-${this.getRandomItem(tailwindValidNumbers)}`)
+    // return `text-gray-200 bg-${this.getRandomItem(tailwindValidColors)}-${this.getRandomItem(tailwindValidNumbers)}`
+    return `text-gray-200 bg-green-500`
   }
 }
