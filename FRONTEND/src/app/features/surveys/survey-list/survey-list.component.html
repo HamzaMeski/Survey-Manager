@@ -81,7 +81,7 @@
 
     <div class="grid gap-4 md:grid-cols-3">
       <div *ngFor="let survey of surveys"
-           class="flex-col p-8 hover:scale-105 hover:ease-out hover:duration-300 rounded-lg shadow-2xl md:p-12 bg-gradient-to-br from-gray-900 to-black ">
+           class="flex-col p-8 hover:scale-105 hover:ease-out hover:duration-300 rounded-lg shadow-gray-900 shadow-lg md:p-12 bg-gradient-to-br from-gray-900 to-black ">
         <h2 class="font-serif flex items-center gap-2">
           <p
             class="flex items-center justify-center text-2xl font-semibold rounded-full shadow-lg w-12 h-12"
@@ -95,43 +95,44 @@
         </h2>
         <p class="text-gray-600 mb-4">{{survey.description}}</p>
         <p class="text-gray-600 mb-4">owner id: {{survey.owner.id}}</p>
-        <div class="mt-4">
-          <h3 class="text-lg font-semibold mb-2">Editions</h3>
-          <div *ngIf="!survey.editions.length" class="text-gray-500 text-sm">
-            No editions available
+
+        <div class="flex-col">
+          <div class="mt-4">
+            <h3 class="text-lg font-semibold mb-2">Editions</h3>
+            <div *ngIf="!survey.editions.length" class="text-gray-500 text-sm">
+              No editions available
+            </div>
+
+            <button
+              *ngIf="survey.editions.length"
+              (click)="openEditionsModal(survey)"
+              class="text-white border border-white bg-[#050708] hover:bg-[#050708]/90 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex dark:focus:ring-[#050708]/50 dark:hover:bg-[#050708]/30 me-2 mb-2 items-center gap-2"
+            >
+              <i class="fa-solid fa-bars text-2xl"></i>
+              <span>View {{ survey.editions.length }} Edition(s)</span>
+              <i class="fas fa-chevron-right text-sm"></i>
+            </button>
           </div>
-
-          <button
-            *ngIf="survey.editions.length"
-            (click)="openEditionsModal(survey)"
-            class="text-white border border-white bg-[#050708] hover:bg-[#050708]/90 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex dark:focus:ring-[#050708]/50 dark:hover:bg-[#050708]/30 me-2 mb-2 items-center gap-2"
-          >
-            <i class="fa-solid fa-bars text-2xl"></i>
-            <span>View {{ survey.editions.length }} Edition(s)</span>
-            <i class="fas fa-chevron-right text-sm"></i>
-          </button>
-
-        </div>
-        <div class="flex justify-end space-x-2">
-          <button
-            (click)="onEditClick(survey)"
-            class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
-          >
+          <div class="flex justify-end space-x-2">
+            <button
+              (click)="onEditClick(survey)"
+              class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
+            >
             <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
               Edit
             </span>
-          </button>
-          <button
-            class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-300 via-red-500 to-red-600 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-red-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
-            (click)="onDeleteClick(survey)"
-          >
+            </button>
+            <button
+              class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-300 via-red-500 to-red-600 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-red-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
+              (click)="onDeleteClick(survey)"
+            >
             <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
               Delete
             </span>
-          </button>
+            </button>
+          </div>
         </div>
       </div>
-
     </div>
 
     <div class="h-40"></div>
