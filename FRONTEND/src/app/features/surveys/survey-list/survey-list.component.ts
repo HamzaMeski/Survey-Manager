@@ -29,6 +29,8 @@ export class SurveyListComponent implements OnInit {
   showEditionsModal = false;
   selectedSurvey: SurveyResponse | null = null;
 
+  showCreateEditionModal: boolean = false
+
   constructor(private surveyService: SurveyService) {}
 
   ngOnInit(): void {
