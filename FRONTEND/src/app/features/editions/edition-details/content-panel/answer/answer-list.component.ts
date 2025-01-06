@@ -5,7 +5,6 @@ import {AnswerResponse} from '../../../../../models/answer.interface';
 import {AnswerService} from '../../../../../core/services/answer.service';
 import {AddAnswerComponent} from './add-question/add-answer.component';
 import {EditAnswerComponent} from './edit-question/edit-answer.component';
-import {EditQuestionComponent} from '../question/edit-question/edit-question.component';
 
 @Component({
   selector: 'app-answer-list',
@@ -13,7 +12,6 @@ import {EditQuestionComponent} from '../question/edit-question/edit-question.com
     CommonModule,
     AddAnswerComponent,
     EditAnswerComponent,
-    EditQuestionComponent
   ],
   templateUrl: './answer-list.component.html'
 })
