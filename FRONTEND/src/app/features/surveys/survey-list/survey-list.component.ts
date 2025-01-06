@@ -95,6 +95,6 @@ export class SurveyListComponent implements OnInit {
     const tailwindValidColors: string[] = ['red', 'blue', 'green', 'yellow', 'purple']
     //console.log(`text-gray-200 bg-${this.getRandomItem(tailwindValidColors)}-${this.getRandomItem(tailwindValidNumbers)}`)
     // return `text-gray-200 bg-${this.getRandomItem(tailwindValidColors)}-${this.getRandomItem(tailwindValidNumbers)}`
-    return `text-gray-200 bg-purple-500`
+    return `text-gray-200 bg-green-500`
   }
 }
