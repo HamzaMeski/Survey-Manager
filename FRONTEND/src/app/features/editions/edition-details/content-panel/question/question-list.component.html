@@ -25,23 +25,29 @@
     >
     </app-add-question>
     <div *ngFor="let question of questions"
-         class="p-4 border rounded-lg hover:bg-gray-50 cursor-pointer">
+         class="border rounded-lg hover:bg-gray-50 cursor-pointer">
 
-      <section *ngIf="!(displayEditQuestionForm && clickedQuestionForEdit == question)">
+      <section
+        *ngIf="!(displayEditQuestionForm && clickedQuestionForEdit == question)"
+        class="flex justify-between items-center"
+      >
         <!-- question info -->
-        <div (click)="onSelect(question)">
+        <div (click)="onSelect(question)" class="grow  p-4">
           <div class="font-semibold">{{question.text}}</div>
           <div class="text-gray-600">{{question.instructions}}</div>
         </div>
-        <!-- Edit button -->
-        <button class="bg-blue-500 py-1 px-2" (click)="displayEditQuestionForm = true; clickedQuestionForEdit = question">edit</button>
-        <!-- Delete button -->
-        <div  class="bg-red-300 inline py-1 px-2">
-          <button class="bg-red-500  py-1 px-2" (click)="confirmDeletion = true; clickedQuestionForDelete = question">delete</button>
-          <em *ngIf="confirmDeletion && question == clickedQuestionForDelete">
-            <em (click)="onDelete(question)">✅</em>
-            <em (click)="confirmDeletion = false">❌</em>
-          </em>
+
+        <div>
+          <!-- Edit button -->
+          <button class="bg-blue-500 py-1 px-2" (click)="displayEditQuestionForm = true; clickedQuestionForEdit = question">edit</button>
+          <!-- Delete button -->
+          <div  class="bg-red-300 inline py-1 px-2">
+            <button class="bg-red-500  py-1 px-2" (click)="confirmDeletion = true; clickedQuestionForDelete = question">delete</button>
+            <em *ngIf="confirmDeletion && question == clickedQuestionForDelete">
+              <em (click)="onDelete(question)">✅</em>
+              <em (click)="confirmDeletion = false">❌</em>
+            </em>
+          </div>
         </div>
       </section>
 
