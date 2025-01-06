@@ -84,4 +84,17 @@ export class SurveyListComponent implements OnInit {
     this.showCreateSurveyModal = false;
     this.loadSurveys();
   }
+
+  getRandomItem(arr :number[] | string[]): string | number {
+    const index: number = Math.floor(Math.random() * arr.length)
+    return arr[index]
+  }
+
+  bgFn(): string {
+    const tailwindValidNumbers: number[] = [400, 500, 600]
+    const tailwindValidColors: string[] = ['red', 'blue', 'green', 'yellow', 'purple']
+    //console.log(`text-gray-200 bg-${this.getRandomItem(tailwindValidColors)}-${this.getRandomItem(tailwindValidNumbers)}`)
+    // return `text-gray-200 bg-${this.getRandomItem(tailwindValidColors)}-${this.getRandomItem(tailwindValidNumbers)}`
+    return `text-gray-200 bg-purple-500`
+  }
 }

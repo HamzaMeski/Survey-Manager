@@ -71,10 +71,10 @@
     <div class="h-32 md:h-40"></div>
 
     <div class="flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold">Surveys</h1>
+      <h1 class="text-3xl font-bold font-serif">SURVEYS</h1>
       <button
         (click)="showCreateSurveyModal = true"
-        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+        class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
         Create Survey
       </button>
     </div>
@@ -84,8 +84,10 @@
            class="flex-col p-8 hover:scale-105 hover:ease-out hover:duration-300 rounded-lg shadow-2xl md:p-12 bg-gradient-to-br from-gray-900 to-black ">
         <h2 class="font-serif flex items-center gap-2">
           <p
-            class="flex items-center justify-center text-3xl font-semibold text-green-400 bg-green-800 rounded-full shadow-lg w-12 h-12">
-            1
+            class="flex items-center justify-center text-2xl font-semibold rounded-full shadow-lg w-12 h-12"
+            [class]="bgFn()"
+          >
+            &lt; &gt;
           </p>
           <p class="text-2xl">
             {{survey.title}}
