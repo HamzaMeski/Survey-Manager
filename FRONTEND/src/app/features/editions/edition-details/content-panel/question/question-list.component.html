@@ -1,6 +1,6 @@
 <div>
   <div class="flex justify-between items-center mb-6">
-    <h2 class="text-xl font-semibold font-serif text-gray-200">Questions for: {{subject?.title}}</h2>
+    <h2 class="text-xl font-semibold font-serif text-gray-200">Questions for: {{subject.title}}</h2>
     <button
       *ngIf="!hasSubSubjects()"
       (click)="toggleAddQuestionInput()"
