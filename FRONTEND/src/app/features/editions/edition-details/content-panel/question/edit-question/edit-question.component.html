@@ -1,41 +1,99 @@
-
-<form [formGroup]="questionForm" (ngSubmit)="onSubmit()" class="bg-blue-400 p-2 flex flex-col">
-  <div class="m-2">
-    <div >question</div>
+<form
+  [formGroup]="questionForm"
+  (ngSubmit)="onSubmit()"
+  class="flex-auto bg-gradient-to-br from-gray-900 to-black rounded-lg shadow-xl w-full border border-gray-200 px-4 py-2"
+>
+  <div>
+    <div class="text-xl font-semibold font-serif text-gray-300">Question</div>
     <input
       formControlName="text"
       type="text" placeholder="question"
+      class="w-full px-4 py-2
+         bg-gray-800
+         text-gray-100
+         border border-gray-600
+         rounded-lg
+         placeholder-gray-400
+         focus:ring-2 focus:ring-green-500
+         focus:border-green-500
+         hover:border-gray-500"
       [ngClass]="{'border-red-500 text-red-500': isFieldInvalid('text')}"
     >
     <div *ngIf="isFieldInvalid('text')" class="text-red-500">text must be at least 3 characters</div>
   </div>
 
-  <div class="m-2">
-    <div>instructions</div>
-    <textarea formControlName="instructions"></textarea>
+  <div class="mt-4">
+    <div class="text-xl font-semibold font-serif text-gray-300">Instructions</div>
+    <textarea
+      formControlName="instructions"
+      class="w-full px-4 py-2
+         bg-gray-800
+         text-gray-100
+         border border-gray-600
+         rounded-lg
+         placeholder-gray-400
+         focus:ring-2 focus:ring-green-500
+         focus:border-green-500
+         hover:border-gray-500"
+    ></textarea>
   </div>
 
-  <div class="m-2">
-    <div>question type</div>
-    <select formControlName="type">
-      <option value="SINGLE_CHOICE">SINGLE_CHOICE</option>
-      <option value="MULTIPLE_CHOICE">MULTIPLE_CHOICE</option>
+  <div class="mt-4">
+    <div class="text-xl font-semibold font-serif text-gray-300">Question Type</div>
+    <select
+      formControlName="type"
+      class="px-4 py-2
+         bg-gray-800
+         text-gray-100
+         border border-gray-600
+         rounded-lg
+         cursor-pointer
+         focus:ring-2 focus:ring-green-500
+         focus:border-green-500
+         hover:border-gray-500"
+    >
+      <option value="SINGLE_CHOICE" class="bg-gray-800">Single Choice</option>
+      <option value="MULTIPLE_CHOICE" class="bg-gray-800">Multiple Choice</option>
     </select>
   </div>
 
-  <div class="m-2">
-    <div>is it required?</div>
-    <select formControlName="required">
-      <option value="true">true</option>
-      <option value="false">false</option>
+  <div class="mt-4">
+    <div class="text-xl font-semibold font-serif text-gray-300">Is Required?</div>
+    <select
+      formControlName="required"
+      class="px-4 py-2
+         bg-gray-800
+         text-gray-100
+         border border-gray-600
+         rounded-lg
+         cursor-pointer
+         focus:ring-2 focus:ring-green-500
+         focus:border-green-500
+         hover:border-gray-500"
+    >
+      <option value="true" class="bg-gray-800">Yes</option>
+      <option value="false" class="bg-gray-800">No</option>
     </select>
   </div>
 
   <!-- server validation warnings message -->
-  <div class="font-bold text-red-400">
+  <div class="font-bold text-red-400 mt-4">
     {{ serverValidationMessage }}
   </div>
 
-  <button class="bg-gray-200 p-1" type="submit">submit</button>
-  <button class="bg-gray-400 p-1" (click)="onClose.emit()" >cancel</button>
+  <div class="py-4 flex gap-2">
+    <button
+      type="submit"
+      class="bg-gradient-to-r from-green-400 to-green-600 text-white font-medium px-5 py-2.5 rounded-lg hover:from-green-500 hover:to-green-700 focus:ring-4 focus:ring-green-300"
+    >
+      Submit
+    </button>
+    <button
+      type="button"
+      (click)="onClose.emit()"
+      class="text-gray-300 hover:text-white border border-gray-600 hover:bg-gray-700 focus:ring-4 focus:ring-gray-700 font-medium rounded-lg px-5 py-2.5"
+    >
+      Cancel ⌫
+    </button>
+  </div>
 </form>
