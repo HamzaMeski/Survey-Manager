@@ -1,9 +1,10 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SubjectResponse} from '../../../../models/subject.interface';
 import {CommonModule} from '@angular/common';
 import {ModalComponent} from '../../../../shared/components/modal/modal.component';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {SubjectService} from '../../../../core/services/subject.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-subject-tree-item',
@@ -14,22 +15,32 @@ import {SubjectService} from '../../../../core/services/subject.service';
   ],
   templateUrl: './subject-tree-item.component.html'
 })
-export class SubjectTreeItemComponent {
+export class SubjectTreeItemComponent implements OnInit{
   @Input() subject!: SubjectResponse
-  @Input() surveyEditionId!: number
   @Input() level: number = 0
   @Output() select = new EventEmitter<SubjectResponse>()
 
   isExpanded: boolean = false
   showModal: boolean = false
   subjectForm!: FormGroup
-  subjectCreated: EventEmitter<void> = new EventEmitter()
+  surveyEditionId!: number
 
   constructor(
     private fb: FormBuilder,
-    private subjectService: SubjectService
+    private subjectService: SubjectService,
+    private route: ActivatedRoute
   ) {
     this.createForm()
+  }
+
+  ngOnInit(): void {
+    this.getSurveyEditionId()
+  }
+
+  getSurveyEditionId(): void {
+    this.route.params.subscribe(params => {
+      this.surveyEditionId = Number(params['id'])
+    })
   }
 
   get hasSubSubjects(): boolean {
@@ -56,7 +67,7 @@ export class SubjectTreeItemComponent {
     this.select.emit(this.subject);
   }
 
-  createForm() {
+  createForm(): void {
     this.subjectForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
@@ -72,10 +83,11 @@ export class SubjectTreeItemComponent {
   onSubmit(): void {
     if(this.subjectForm.valid) {
       console.log('surveyEditionId' ,this.surveyEditionId)
+
       this.subjectForm.patchValue({parentSubjectId: this.subject.id})
       this.subjectService.createSubject(this.surveyEditionId, this.subjectForm.value).subscribe({
         next: ():void => {
-          this.subjectCreated.emit()
+          this.showModal = false
         },
         error: (object): void => {
           console.error('Error while create subject ', object)
