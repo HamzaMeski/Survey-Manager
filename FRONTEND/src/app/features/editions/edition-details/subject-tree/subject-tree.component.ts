@@ -13,7 +13,7 @@ import {SubjectTreeItemComponent} from './subject-tree-item.component';
   templateUrl: './subject-tree.component.html'
 })
 export class SubjectTreeComponent implements OnInit {
-  @Input() editionId: number | null = null;
+  @Input() editionId!: number
   @Output() subjectSelected = new EventEmitter<SubjectResponse>();
 
   subjects: SubjectResponse[] = [];

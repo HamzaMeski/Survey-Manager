@@ -26,9 +26,9 @@ export class SurveyCreateComponent {
         this.surveyForm = this.fb.group({
             title: ['', [Validators.required, Validators.minLength(3)]],
             description: ['', [Validators.required, Validators.minLength(10)]],
-            status: ['INACTIVE'], 
-            ownerId: ['', [Validators.required]], 
-            category: [''], 
+            status: ['INACTIVE'],
+            ownerId: ['', [Validators.required]],
+            category: [''],
             targetAudience: ['']
         });
     }
@@ -41,14 +41,14 @@ export class SurveyCreateComponent {
     onSubmit(): void {
         if (this.surveyForm.valid) {
             this.isSubmitting = true;
-            
+
             this.surveyService.createSurvey(this.surveyForm.value)
                 .subscribe({
                     next: () => {
                         this.surveyCreated.emit();
                     },
-                    error: (error) => {
-                        console.error('Error creating survey:', error);
+                    error: (object) => {
+                        console.error('Error creating survey:', object);
                         this.isSubmitting = false;
                     }
                 });

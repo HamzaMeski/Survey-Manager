@@ -21,7 +21,7 @@ import {EditionService} from '../../../core/services/edition.service';
 })
 export class EditionDetailsComponent implements OnInit {
   editionId!: number
-  edition!: EditionResponse
+  edition: EditionResponse | null = null
   selectedSubject:SubjectResponse | null = null
 
   constructor(
