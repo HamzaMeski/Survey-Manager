@@ -1,11 +1,12 @@
 <div>
   <div class="flex justify-between items-center mb-6">
-    <h2 class="text-xl font-semibold">Questions for: {{subject?.title}}</h2>
+    <h2 class="text-xl font-semibold font-serif text-gray-200">Questions for: {{subject?.title}}</h2>
     <button
-      *ngIf="!hasSubSubjects()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      *ngIf="!hasSubSubjects()"
       (click)="toggleAddQuestionInput()"
-    >
-      Add Question
+      class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded flex items-center gap-1">
+      <i class="fa-solid fa-question text-xl"></i>
+      <em>Add Question</em>
     </button>
   </div>
 
@@ -24,23 +25,43 @@
     >
     </app-add-question>
     <div *ngFor="let question of questions"
-         class="p-4 border rounded-lg hover:bg-gray-50 cursor-pointer">
+         class="border border-green-500 rounded-lg shadow-gray-900 shadow-lg md:p-4 bg-gradient-to-br from-gray-900 to-black hover:bg-gray-900 cursor-pointer">
 
-      <section *ngIf="!(displayEditQuestionForm && clickedQuestionForEdit == question)">
+      <section
+        *ngIf="!(displayEditQuestionForm && clickedQuestionForEdit == question)"
+        class="w-full flex justify-between items-center"
+      >
         <!-- question info -->
-        <div (click)="onSelect(question)">
-          <div class="font-semibold">{{question.text}}</div>
-          <div class="text-gray-600">{{question.instructions}}</div>
+        <div (click)="onSelect(question)" class="grow  p-4">
+          <div class="font-semibold text-gray-100">{{question.text}}</div>
+          <div class="text-gray-200">{{question.instructions}}</div>
         </div>
-        <!-- Edit button -->
-        <button class="bg-blue-500 py-1 px-2" (click)="displayEditQuestionForm = true; clickedQuestionForEdit = question">edit</button>
-        <!-- Delete button -->
-        <div  class="bg-red-300 inline py-1 px-2">
-          <button class="bg-red-500  py-1 px-2" (click)="confirmDeletion = true; clickedQuestionForDelete = question">delete</button>
-          <em *ngIf="confirmDeletion && question == clickedQuestionForDelete">
-            <em (click)="onDelete(question)">✅</em>
-            <em (click)="confirmDeletion = false">❌</em>
-          </em>
+
+        <div>
+          <!-- Edit button -->
+          <button
+            (click)="displayEditQuestionForm = true; clickedQuestionForEdit = question"
+            class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800"
+          >
+            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+              Edit
+            </span>
+          </button>
+          <!-- Delete button -->
+          <div class="inline">
+            <button
+              class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-300 via-red-500 to-red-600 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-red-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400"
+              (click)="confirmDeletion = true; clickedQuestionForDelete = question"
+            >
+              <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                Delete
+              </span>
+            </button>
+            <em *ngIf="confirmDeletion && question == clickedQuestionForDelete" class="inline-block p-2 border border-gray-100 rounded-md">
+              <em (click)="onDelete(question)">✅</em>
+              <em (click)="confirmDeletion = false" class="ml-4">❌</em>
+            </em>
+          </div>
         </div>
       </section>
 
