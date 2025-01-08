@@ -61,7 +61,7 @@ export class QuestionListComponent implements OnInit, OnChanges {
   }
 
   hasSubSubjects(): boolean {
-    return this.subject.subSubjects.length > 0
+    return this.subject.subSubjects && this.subject.subSubjects.length > 0
   }
 
   toggleAddQuestionInput(): void {

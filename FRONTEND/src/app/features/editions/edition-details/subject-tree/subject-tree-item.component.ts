@@ -19,6 +19,7 @@ export class SubjectTreeItemComponent implements OnInit{
   @Input() subject!: SubjectResponse
   @Input() level: number = 0
   @Output() select = new EventEmitter<SubjectResponse>()
+  @Output() subjectCreated = new EventEmitter<void>()
 
   isExpanded: boolean = false
   showModal: boolean = false
@@ -44,16 +45,12 @@ export class SubjectTreeItemComponent implements OnInit{
   }
 
   get hasSubSubjects(): boolean {
-    return this.subject.subSubjects.length > 0
+    return this.subject.subSubjects && this.subject.subSubjects.length > 0
   }
 
   get hasQuestions(): boolean {
     console.log(this.subject)
-    return this.subject.questions.length > 0
-  }
-
-  get isLastLevel(): boolean {
-    return !this.hasSubSubjects;
+    return this.subject.questions && this.subject.questions.length > 0
   }
 
   get paddingLeft(): string {
@@ -93,6 +90,7 @@ export class SubjectTreeItemComponent implements OnInit{
       this.subjectService.createSubject(this.surveyEditionId, this.subjectForm.value).subscribe({
         next: ():void => {
           this.showModal = false
+          this.subjectCreated.emit()
         },
         error: (object): void => {
           console.error('Error while create subject ', object)
