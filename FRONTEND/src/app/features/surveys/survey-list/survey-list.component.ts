@@ -7,6 +7,8 @@ import { SurveyCreateComponent } from '../survey-create/survey-create.component'
 import { SurveyEditComponent } from '../survey-edit/survey-edit.component';
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
 import { ConfirmationModalComponent } from '../../../shared/components/confirmation-modal/confirmation-modal.component';
+import {AuthService} from '../../../core/services/auth.service';
+import {HasPermissionDirective} from '../../../shared/directives/has-permission.directive';
 
 @Component({
   selector: 'app-survey-list',
@@ -17,7 +19,8 @@ import { ConfirmationModalComponent } from '../../../shared/components/confirmat
     SurveyCreateComponent,
     SurveyEditComponent,
     ModalComponent,
-    ConfirmationModalComponent
+    ConfirmationModalComponent,
+    HasPermissionDirective
   ],
   templateUrl: './survey-list.component.html'
 })
@@ -31,7 +34,10 @@ export class SurveyListComponent implements OnInit {
 
   showCreateEditionModal: boolean = false
 
-  constructor(private surveyService: SurveyService) {}
+  constructor(
+    private surveyService: SurveyService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.loadSurveys();
@@ -96,5 +102,12 @@ export class SurveyListComponent implements OnInit {
     //console.log(`text-gray-200 bg-${this.getRandomItem(tailwindValidColors)}-${this.getRandomItem(tailwindValidNumbers)}`)
     // return `text-gray-200 bg-${this.getRandomItem(tailwindValidColors)}-${this.getRandomItem(tailwindValidNumbers)}`
     return `text-gray-200 bg-green-500`
+  }
+
+
+
+
+  logout() {
+    this.authService.logout();
   }
 }
