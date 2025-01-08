@@ -7,7 +7,7 @@
 
     <!-- add subject -->
     <button
-      *ngIf="hasSubSubjects"
+      *ngIf="!hasQuestions"
       (click)="showModal = true"
       class="w-6 h-6 flex items-center justify-center rounded-full bg-red-500 hover:bg-gray-700">
         <i class="fa-solid fa-plus text-white"></i>
@@ -39,7 +39,7 @@
     </div>
 
     <!-- Level Indicator -->
-    <div *ngIf="isLastLevel"
+    <div *ngIf="hasQuestions"
          class="ml-2 px-2 py-1 text-xs bg-green-800 text-green-100 rounded-full">
       With Questions
     </div>

@@ -30,6 +30,8 @@ export class SubjectTreeComponent implements OnInit {
     this.subjectService.getSubjectsBySurveyEditionId(this.editionId!)
       .subscribe({
         next: (subjects) => {
+          console.log('subjects loaded')
+          console.log(this.subjects)
           this.subjects = subjects;
         },
         error: (error) => console.error('Error loading subjects:', error)
