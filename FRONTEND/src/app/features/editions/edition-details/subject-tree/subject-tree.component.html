@@ -5,7 +5,6 @@
     <app-subject-tree-item
       *ngFor="let subject of subjects"
       [subject]="subject"
-      [surveyEditionId] = "editionId"
       (select)="onSubjectSelect($event)">
     </app-subject-tree-item>
   </div>

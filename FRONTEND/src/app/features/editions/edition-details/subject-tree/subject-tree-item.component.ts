@@ -44,7 +44,12 @@ export class SubjectTreeItemComponent implements OnInit{
   }
 
   get hasSubSubjects(): boolean {
-    return this.subject.subSubjects && this.subject.subSubjects.length > 0;
+    return this.subject.subSubjects.length > 0
+  }
+
+  get hasQuestions(): boolean {
+    console.log(this.subject)
+    return this.subject.questions.length > 0
   }
 
   get isLastLevel(): boolean {

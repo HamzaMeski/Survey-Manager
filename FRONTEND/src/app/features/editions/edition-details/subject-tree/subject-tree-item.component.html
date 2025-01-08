@@ -7,7 +7,7 @@
 
     <!-- add subject -->
     <button
-      *ngIf="hasSubSubjects"
+      *ngIf="!hasQuestions"
       (click)="showModal = true"
       class="w-6 h-6 flex items-center justify-center rounded-full bg-red-500 hover:bg-gray-700">
         <i class="fa-solid fa-plus text-white"></i>
